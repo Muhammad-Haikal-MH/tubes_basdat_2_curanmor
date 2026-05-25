@@ -1,12 +1,18 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 
 import adminRoutes from "./routes/adminRoutes.js";
 import policeRoutes from "./routes/polisiRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import connectDB from "./config/db.js";
+import session from "express-session";
 
+dotenv.config();
+
+connectDB();
 
 
 const app = express();
@@ -21,22 +27,22 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(session({
+    secret: "lamo-secret",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
 
 // View Engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 
-app.use((req, res, next) => {
-
-    // nanti tinggal ganti:
-    // req.session.user
-
-    res.locals.user = null;
-
-    next();
-
-});
 
 // Routes
 app.use("/", authRoutes);
