@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 
 import adminRoutes from "./routes/adminRoutes.js";
 import policeRoutes from "./routes/polisiRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 
 
@@ -25,7 +27,21 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 
+app.use((req, res, next) => {
+
+    // nanti tinggal ganti:
+    // req.session.user
+
+    res.locals.user = null;
+
+    next();
+
+});
+
 // Routes
+app.use("/", authRoutes);
+app.use("/", userRoutes);
+
 app.use("/admin", adminRoutes);
 
 app.use("/polisi", policeRoutes);

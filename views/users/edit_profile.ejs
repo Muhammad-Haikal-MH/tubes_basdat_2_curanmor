@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+
+<div class="container py-5 mt-4">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-person-circle text-primary" style="font-size: 5rem;"></i>
+                    </div>
+                    <h4 class="fw-bold mb-1"><%= locals.user ? user.nama : 'Devina (Contoh)' %></h4>
+                    <p class="text-muted mb-3"><%= locals.user ? user.email : 'devina@gmail.com' %></p>
+                    <span class="badge bg-primary px-3 py-2 text-uppercase"><%= locals.user ? user.role : 'User' %></span>
+                </div>
+                <ul class="list-group list-group-flush rounded-bottom-4">
+                    <li class="list-group-item p-3">
+                        <i class="bi bi-calendar-check me-2 text-primary"></i> 
+                        Terdaftar sejak: <%= locals.user ? new Date(user.createdAt).toLocaleDateString('id-ID') : '18 Mei 2026' %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-bottom p-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-journal-text me-2"></i> Riwayat Laporan Curanmor</h5>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div class="alert alert-light border shadow-sm rounded-3 mb-3" role="alert">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split"></i> Belum Ditemukan</span>
+                            <small class="text-muted">18 Mei 2026 - 22:30</small>
+                        </div>
+                        <h6 class="fw-bold mb-1">Honda Beat (Hitam) - E 1234 XX</h6>
+                        <p class="mb-1 text-muted small"><i class="bi bi-geo-alt"></i> TKP: Kesambi</p>
+                        <p class="mb-0 text-muted small">Ciri Khusus: Sticker bintang</p>
+                    </div>
+
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
