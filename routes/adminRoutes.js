@@ -1,10 +1,92 @@
 import express from "express";
-import { isLoggedIn, isAdmin } from "../middleware/authMiddleware.js";
+import Laporan from "../models/Laporan.js";
+
+import {
+    isLoggedIn,
+    isAdmin
+} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", isLoggedIn, isAdmin, (req, res) => {
-  res.render("admin/dashboard");
+router.get("/", isLoggedIn, isAdmin, async (req, res) => {
+
+    try {
+        // ambil semua laporan
+        const laporan = await Laporan.find().sort({
+            createdAt: -1
+        });
+
+        // statistik
+        const totalLaporan = await Laporan.countDocuments();
+        const diproses = await Laporan.countDocuments({
+            status: "Diproses"
+        });
+        const selesai = await Laporan.countDocuments({
+            status: "Selesai"
+        });
+
+        res.render("admin/dashboard", {
+            laporan,
+            totalLaporan,
+            diproses,
+            selesai
+        });
+
+    } catch(error) {
+
+        console.log(error);
+
+        res.send("Gagal load dashboard admin");
+
+    }
+
 });
+
+router.get( "/laporan/:id", isLoggedIn, isAdmin, async (req, res) => {
+        try {
+            const laporan = await Laporan.findById(
+                req.params.id
+            );
+            if(!laporan) {
+                return res.send("Laporan tidak ditemukan");
+            }
+            res.render("admin/detailLaporan", {
+                laporan
+            });
+        } catch(error) {
+            console.log(error);
+            res.send("Gagal load detail laporan");
+        }
+    }
+);
+
+router.post( "/laporan/:id/status", async (req, res) => {
+        try {
+            await Laporan.findByIdAndUpdate(
+                req.params.id,
+                {
+                    status: req.body.status
+                }
+            );
+            res.redirect("/admin");
+        } catch(error) {
+            console.log(error);
+            res.send("Gagal update status");
+        }
+    }
+);
+
+router.post( "/laporan/:id/delete", async (req, res) => {
+        try {
+            await Laporan.findByIdAndDelete(
+                req.params.id
+            );
+            res.redirect("/admin");
+        } catch(error) {
+            console.log(error);
+            res.send("Gagal menghapus laporan");
+        }
+    }
+);
 
 export default router;

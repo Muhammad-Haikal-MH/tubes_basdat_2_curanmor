@@ -1,0 +1,178 @@
+<%- include('../partials/dashboardHeader') %>
+
+<%- include('../partials/dashboardSidebar') %>
+
+<div class="main-content">
+    
+    <div class="container-fluid p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold">
+                    Detail Laporan Polisi
+                </h2>
+                <p class="text-muted mb-0">
+                    Informasi lengkap laporan kehilangan kendaraan
+                </p>
+            </div>
+            <a href="/polisi" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left"></i>
+                Kembali
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="text-muted small">
+                            Nama Pelapor
+                        </label>
+                        <h5>
+                            <%= laporan.nama_pelapor %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-muted small">
+                            Plat Nomor
+                        </label>
+                        <h5>
+                            <%= laporan.plat_nomor %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-muted small">
+                            Merk Motor
+                        </label>
+                        <h5>
+                            <%= laporan.merk_motor %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-muted small">
+                            Tipe Motor
+                        </label>
+                        <h5>
+                            <%= laporan.tipe_motor %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-muted small">
+                            Warna Motor
+                        </label>
+                        <h5>
+                            <%= laporan.warna_motor %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-muted small">
+                            Tahun Pembuatan
+                        </label>
+
+                        <h5>
+                            <%= laporan.tahun_pembuatan %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <label class="text-muted small">
+                            Lokasi Kehilangan
+                        </label>
+
+                        <h5>
+                            <%= laporan.lokasi_kehilangan %>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="text-muted small">
+                            Kronologi
+                        </label>
+
+                        <div class="bg-light rounded-3 p-3">
+                            <%= laporan.kronologi %>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="text-muted small">
+                            Status
+                        </label>
+                        <br>
+                        <span class="badge bg-warning fs-6">
+                            <%= laporan.status %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOTO -->
+        <div class="card border-0 shadow-sm rounded-4 mt-4">
+            <div class="card-body p-4">
+                <h4 class="fw-bold mb-4">
+                    Foto Bukti
+                </h4>
+
+                <div class="row g-4">
+                    <% if(laporan.foto_kendaraan) { %>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm">
+                                <img 
+                                    src="/uploads/<%= laporan.foto_kendaraan %>"
+                                    class="card-img-top"
+                                    style="height: 250px; object-fit: cover;"
+                                >
+                                <div class="card-body">
+                                    <h6 class="fw-bold">
+                                        Foto Kendaraan
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <% if(laporan.foto_stnk) { %>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm">
+                                <img 
+                                    src="/uploads/<%= laporan.foto_stnk %>"
+                                    class="card-img-top"
+                                    style="height: 250px; object-fit: cover;"
+                                >
+                                <div class="card-body">
+                                    <h6 class="fw-bold">
+                                        Foto STNK
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <% if(laporan.foto_ktp) { %>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm">
+                                <img 
+                                    src="/uploads/<%= laporan.foto_ktp %>"
+                                    class="card-img-top"
+                                    style="height: 250px; object-fit: cover;"
+                                >
+                                <div class="card-body">
+                                    <h6 class="fw-bold">
+                                        Foto KTP
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/dashboardFooter') %>
