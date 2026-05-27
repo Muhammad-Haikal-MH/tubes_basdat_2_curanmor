@@ -59,18 +59,17 @@
                 <!-- Menu Kiri -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
-                            Home
+                <a class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active text-primary fw-bold' : '' %>" href="/">                            Home
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/edukasi">
+                        <a class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'edukasi' ? 'active text-primary fw-bold' : '' %>" href="/edukasi">
                             Edukasi
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/laporan/baru">
+                        <a class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'laporan' ? 'active text-primary fw-bold' : '' %>" href="/laporan">
                             Buat Laporan
                         </a>
                     </li>
