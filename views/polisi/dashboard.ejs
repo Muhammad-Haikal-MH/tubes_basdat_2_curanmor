@@ -4,224 +4,99 @@
 
 <div class="main-content">
 
-    <!-- TOPBAR -->
-
     <div class="topbar p-3 d-flex justify-content-between align-items-center">
-
         <h4 class="mb-0 fw-bold">
             Dashboard Polisi
         </h4>
-
         <div class="d-flex align-items-center gap-3">
-
-            <i class="bi bi-bell fs-5"></i>
-
+            <i class="bi bi-shield-check fs-5"></i>
             <div class="fw-semibold">
                 Polisi
             </div>
-
         </div>
-
     </div>
 
-
-
-    <!-- CONTENT -->
-
     <div class="container-fluid p-4">
-
-        <!-- Statistik -->
-
-        <div class="row g-4 mb-4">
-
+        <div class="row mb-4">
             <div class="col-md-4">
-
-                <div class="card stat-card shadow-sm">
-
+                <div class="card shadow-sm border-0 rounded-4">
                     <div class="card-body">
-
                         <h6 class="text-muted">
-                            Total Laporan
+                            Laporan Diproses
                         </h6>
-
-                        <h2 class="fw-bold">
-                            120
-                        </h2>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <div class="card stat-card shadow-sm">
-
-                    <div class="card-body">
-
-                        <h6 class="text-muted">
-                            Diproses
-                        </h6>
-
                         <h2 class="fw-bold text-warning">
-                            40
+                            <%= totalDiproses %>
                         </h2>
-
                     </div>
-
                 </div>
-
             </div>
-
-            <div class="col-md-4">
-
-                <div class="card stat-card shadow-sm">
-
-                    <div class="card-body">
-
-                        <h6 class="text-muted">
-                            Selesai
-                        </h6>
-
-                        <h2 class="fw-bold text-success">
-                            80
-                        </h2>
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
 
-
-
-        <!-- TABLE -->
-
         <div class="card border-0 shadow-sm rounded-4">
-
             <div class="card-body">
-
                 <h5 class="fw-bold mb-4">
-                    Data Laporan
+                    Data Laporan Diproses
                 </h5>
 
                 <div class="table-responsive">
-
                     <table class="table align-middle">
-
                         <thead>
-
                             <tr>
-
                                 <th>Pelapor</th>
-
                                 <th>Kendaraan</th>
-
-                                <th>Plat Nomor</th>
-
                                 <th>Status</th>
-
-                                <th>Update Status</th>
-
+                                <th>Aksi</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
+                            <% laporan.forEach((item) => { %>
+                                <tr>
+                                    <td>
+                                        <%= item.nama_pelapor %>
+                                    </td>
 
-                            <tr>
+                                    <td>
+                                        <%= item.merk_motor %>
+                                        <%= item.tipe_motor %>
+                                    </td>
 
-                                <td>Haikal</td>
-
-                                <td>Honda Beat</td>
-
-                                <td>B 1234 XYZ</td>
-
-                                <td>
-
-                                    <span class="badge bg-warning">
-                                        Diproses
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <select class="form-select">
-
-                                        <option>
-                                            Pending
-                                        </option>
-
-                                        <option selected>
+                                    <td>
+                                        <span class="badge bg-warning text-dark">
                                             Diproses
-                                        </option>
+                                        </span>
+                                    </td>
 
-                                        <option>
-                                            Selesai
-                                        </option>
+                                    <td class="d-flex gap-2 flex-wrap">
+                                        <a 
+                                            href="/polisi/laporan/<%= item._id %>"
+                                            class="btn btn-sm btn-info text-white"
+                                        >
+                                            Detail
+                                        </a>
 
-                                    </select>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <tr>
-
-                                <td>Budi</td>
-
-                                <td>Yamaha NMAX</td>
-
-                                <td>D 8899 ABC</td>
-
-                                <td>
-
-                                    <span class="badge bg-success">
-                                        Selesai
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <select class="form-select">
-
-                                        <option>
-                                            Pending
-                                        </option>
-
-                                        <option>
-                                            Diproses
-                                        </option>
-
-                                        <option selected>
-                                            Selesai
-                                        </option>
-
-                                    </select>
-
-                                </td>
-
-                            </tr>
-
+                                        <form 
+                                            action="/polisi/laporan/<%= item._id %>/status"
+                                            method="POST"
+                                        >
+                                            <input 
+                                                type="hidden"
+                                                name="status"
+                                                value="selesai"
+                                            >
+                                            <button class="btn btn-sm btn-success">
+                                                Selesai
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <%- include('../partials/dashboardFooter') %>

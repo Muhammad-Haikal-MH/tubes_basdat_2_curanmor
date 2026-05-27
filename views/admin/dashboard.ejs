@@ -29,145 +29,129 @@
     <!-- CONTENT -->
 
     <div class="container-fluid p-4">
-
         <div class="row g-4 mb-4">
-
             <div class="col-md-4">
-
                 <div class="card stat-card shadow-sm">
-
                     <div class="card-body">
-
                         <h6 class="text-muted">
                             Total Laporan
                         </h6>
-
                         <h2 class="fw-bold">
-                            120
+                            <%= totalLaporan %>
                         </h2>
-
                     </div>
-
                 </div>
-
             </div>
 
             <div class="col-md-4">
-
                 <div class="card stat-card shadow-sm">
-
                     <div class="card-body">
-
                         <h6 class="text-muted">
                             Diproses
                         </h6>
 
                         <h2 class="fw-bold text-warning">
-                            40
+                            <%= diproses %>
                         </h2>
-
                     </div>
-
                 </div>
-
             </div>
 
             <div class="col-md-4">
-
                 <div class="card stat-card shadow-sm">
-
                     <div class="card-body">
-
                         <h6 class="text-muted">
                             Selesai
                         </h6>
 
                         <h2 class="fw-bold text-success">
-                            80
+                            <%= selesai %>
                         </h2>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-
 
         <!-- TABLE -->
 
         <div class="card border-0 shadow-sm rounded-4">
-
             <div class="card-body">
-
                 <h5 class="fw-bold mb-4">
                     Data Laporan
                 </h5>
 
                 <div class="table-responsive">
-
                     <table class="table align-middle">
-
                         <thead>
-
                             <tr>
-
                                 <th>Pelapor</th>
-
                                 <th>Kendaraan</th>
-
                                 <th>Status</th>
-
                                 <th>Aksi</th>
-
                             </tr>
-
                         </thead>
-
                         <tbody>
+                            <% laporan.forEach((item) => { %>
+                                <tr>
+                                    <td><%= item.nama_pelapor %></td>
+                                    <td>
+                                        <%= item.merk_motor %>
+                                        <%= item.tipe_motor %>
+                                    </td>
+                                    
+                                    <td>
+                                        <% if(item.status === "menunggu") { %>
+                                            <span class="badge bg-secondary">
+                                                Menunggu
+                                            </span>
+                                        <% } %>
+                                        <% if(item.status === "diproses") { %>
+                                            <span class="badge bg-warning text-dark">
+                                                Diproses
+                                            </span>
+                                        <% } %>
+                                        <% if(item.status === "selesai") { %>
+                                            <span class="badge bg-success">
+                                                Selesai
+                                            </span>
+                                        <% } %>
+                                    </td>
+                                            
+                                    <td class="d-flex gap-2 flex-wrap">
+                                        <a href="/admin/laporan/<%= item._id %>" class="btn btn-sm btn-info text-white">
+                                            Detail
+                                        </a>
 
-                            <tr>
+                                        <!-- PROSES -->
+                                        <% if(item.status === "menunggu") { %>
+                                            <form action="/admin/laporan/<%= item._id %>/status" method="POST">
+                                                <input 
+                                                    type="hidden"
+                                                    name="status"
+                                                    value="diproses"
+                                                >
+                                                <button class="btn btn-sm btn-warning">
+                                                    Proses
+                                                </button>
+                                            </form>
+                                        <% } %>
 
-                                <td>Haikal</td>
-
-                                <td>Honda Beat</td>
-
-                                <td>
-
-                                    <span class="badge bg-warning">
-                                        Diproses
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <button class="btn btn-sm btn-primary">
-                                        Edit
-                                    </button>
-
-                                    <button class="btn btn-sm btn-danger">
-                                        Hapus
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
+                                        <form action="/admin/laporan/<%= item._id %>/delete" method="POST">
+                                            <button class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Yakin hapus laporan ini?')"
+                                            >
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }); %>
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <%- include('../partials/dashboardFooter') %>
