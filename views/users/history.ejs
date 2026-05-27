@@ -1,0 +1,193 @@
+<%- include('../partials/header') %>
+
+    <div class="container py-5 min-vh-100">
+        <h3 class="mb-4">History Laporan Saya</h3>
+
+        <% if (laporan.length===0) { %>
+            <p class="text-muted">Belum ada laporan.</p>
+            <% } else { %>
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Plat Nomor</th>
+                                        <th>Motor</th>
+                                        <th>Lokasi</th>
+                                        <th>Tanggal</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <% laporan.forEach(l=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= l.plat_nomor %>
+                                            </td>
+
+                                            <td>
+                                                <%= l.merk_motor %> - <%= l.warna_motor %>
+                                            </td>
+
+                                            <td>
+                                                <%= l.lokasi_kehilangan %>
+                                            </td>
+
+                                            <td>
+                                                <%= new Date(l.createdAt).toLocaleString() %>
+                                            </td>
+
+                                            <td>
+                                                <% const status=l.status || "menunggu" ; %>
+
+                                                    <% if (status==="menunggu" ) { %>
+                                                        <span class="badge bg-warning text-dark">Menunggu</span>
+                                                        <% } else if (status==="diproses" ) { %>
+                                                            <span class="badge bg-primary">Diproses</span>
+                                                            <% } else { %>
+                                                                <span class="badge bg-success">Selesai</span>
+                                                                <% } %>
+                                            </td>
+
+                                            <td class="px-3">
+                                                <i class="bi bi-eye-fill" style="cursor:pointer"
+                                                    data-bs-toggle="modal" data-bs-target="#detail<%= l._id %>"
+                                                    title="Detail">
+                                                </i>
+                                            </td>
+                                        </tr>
+
+                                        <!-- ================= MODAL DETAIL ================= -->
+                                        <div class="modal fade" id="detail<%= l._id %>" tabindex="-1">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Detail Laporan</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        <!-- DATA UTAMA -->
+                                                        <h5>Data Pelapor</h5>
+                                                        <p><b>Nama:</b>
+                                                            <%= l.nama_pelapor %>
+                                                        </p>
+
+                                                        <hr>
+
+                                                        <h5>Data Kendaraan</h5>
+                                                        <p><b>Plat:</b>
+                                                            <%= l.plat_nomor %>
+                                                        </p>
+                                                        <p><b>Rangka:</b>
+                                                            <%= l.nomor_rangka %>
+                                                        </p>
+                                                        <p><b>Mesin:</b>
+                                                            <%= l.nomor_mesin %>
+                                                        </p>
+                                                        <p><b>Motor:</b>
+                                                            <%= l.merk_motor %> - <%= l.tipe_motor %>
+                                                        </p>
+                                                        <p><b>Warna:</b>
+                                                            <%= l.warna_motor %>
+                                                        </p>
+                                                        <p><b>Tahun:</b>
+                                                            <%= l.tahun_pembuatan %>
+                                                        </p>
+
+                                                        <hr>
+
+                                                        <h5>Kronologi</h5>
+                                                        <p><b>Waktu:</b>
+                                                            <%= l.waktu_kejadian %>
+                                                        </p>
+                                                        <p><b>Lokasi:</b>
+                                                            <%= l.lokasi_kehilangan %>
+                                                        </p>
+                                                        <p>
+                                                            <%= l.kronologi %>
+                                                        </p>
+
+                                                        <hr>
+
+                                                        <!-- ================= FOTO ================= -->
+                                                        <h5>Dokumentasi</h5>
+
+                                                        <div class="row g-3">
+
+                                                            <% if (l.foto_kendaraan) { %>
+                                                                <div class="col-md-4">
+                                                                    <p class="mb-1">Foto Kendaraan</p>
+                                                                    <img src="/uploads/<%= l.foto_kendaraan %>"
+                                                                        class="img-fluid rounded border">
+                                                                </div>
+                                                                <% } %>
+
+                                                                    <% if (l.foto_stnk) { %>
+                                                                        <div class="col-md-4">
+                                                                            <p class="mb-1">STNK</p>
+                                                                            <img src="/uploads/<%= l.foto_stnk %>"
+                                                                                class="img-fluid rounded border">
+                                                                        </div>
+                                                                        <% } %>
+
+                                                                            <% if (l.foto_ktp) { %>
+                                                                                <div class="col-md-4">
+                                                                                    <p class="mb-1">KTP</p>
+                                                                                    <img src="/uploads/<%= l.foto_ktp %>"
+                                                                                        class="img-fluid rounded border">
+                                                                                </div>
+                                                                                <% } %>
+
+                                                                                    <% if (l.foto_bpkb) { %>
+                                                                                        <div class="col-md-4">
+                                                                                            <p class="mb-1">BPKB</p>
+                                                                                            <img src="/uploads/<%= l.foto_bpkb %>"
+                                                                                                class="img-fluid rounded border">
+                                                                                        </div>
+                                                                                        <% } %>
+
+                                                                                            <% if (l.foto_tkp) { %>
+                                                                                                <div class="col-md-4">
+                                                                                                    <p class="mb-1">TKP
+                                                                                                        / CCTV</p>
+                                                                                                    <img src="/uploads/<%= l.foto_tkp %>"
+                                                                                                        class="img-fluid rounded border">
+                                                                                                </div>
+                                                                                                <% } %>
+
+                                                        </div>
+
+                                                        <hr>
+
+                                                        <p><b>Status:</b>
+                                                            <%= l.status || "menunggu" %>
+                                                        </p>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% }) %>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <% } %>
+    </div>
+
+    <%- include('../partials/footer') %>

@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 
-const laporanSchema = new mongoose.Schema({
+const laporanSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     nama_pelapor: String,
 
     plat_nomor: String,
@@ -23,12 +30,14 @@ const laporanSchema = new mongoose.Schema({
     foto_tkp: String,
 
     status: {
-        type: String,
-        default: "Diproses"
+      type: String,
+      enum: ["menunggu", "diproses", "selesai"],
+      default: "menunggu"
     }
-
-}, {
-    timestamps: true
-});
+  },
+  {
+    timestamps: true,
+  },
+);
 
 export default mongoose.model("Laporan", laporanSchema);

@@ -4,77 +4,72 @@ import Laporan from "../models/Laporan.js";
 import User from "../models/User.js";
 import isAuthenticated from "../routes/middleware/authMiddleware.js";
 
-
 const router = express.Router();
 
+/* =========================
+   MULTER CONFIG
+========================= */
 const storage = multer.diskStorage({
-
     destination: function (req, file, cb) {
         cb(null, "public/uploads");
     },
 
     filename: function (req, file, cb) {
-
         const nama = req.body.nama_pelapor
-            .toLowerCase()
-            .replace(/\s+/g, "-");
+            ?.toLowerCase()
+            ?.replace(/\s+/g, "-") || "user";
 
         let prefix = "file";
 
-        if (file.fieldname === "foto_stnk") {
-            prefix = "stnk";
-        }
-
-        if (file.fieldname === "foto_bpkb") {
-            prefix = "bpkb";
-        }
-
-        if (file.fieldname === "foto_ktp") {
-            prefix = "ktp";
-        }
-
-        if (file.fieldname === "foto_kendaraan") {
-            prefix = "kendaraan";
-        }
-
-        if (file.fieldname === "foto_tkp") {
-            prefix = "tkp";
-        }
-
-        if (file.fieldname === "surat_leasing") {
-            prefix = "leasing";
-        }
+        if (file.fieldname === "foto_stnk") prefix = "stnk";
+        if (file.fieldname === "foto_bpkb") prefix = "bpkb";
+        if (file.fieldname === "foto_ktp") prefix = "ktp";
+        if (file.fieldname === "foto_kendaraan") prefix = "kendaraan";
+        if (file.fieldname === "foto_tkp") prefix = "tkp";
+        if (file.fieldname === "surat_leasing") prefix = "leasing";
 
         const ext = file.originalname.split(".").pop();
 
         cb(null, `${prefix}-${nama}-${Date.now()}.${ext}`);
     }
-
 });
 
 const upload = multer({ storage });
 
+/* =========================
+   HOME
+========================= */
 router.get("/", (req, res) => {
     res.render("users/home", {
         currentPage: "home"
     });
 });
 
+/* =========================
+   EDUKASI
+========================= */
 router.get("/edukasi", (req, res) => {
     res.render("users/edukasi", {
         currentPage: "edukasi"
     });
 });
 
+/* =========================
+   FORM LAPORAN
+========================= */
 router.get("/laporan", isAuthenticated, (req, res) => {
     res.render("users/laporan", {
-        currentPage: "laporan"
+        currentPage: "laporan",
+        user: req.session.user
     });
 });
 
+/* =========================
+   SUBMIT LAPORAN
+========================= */
 router.post(
     "/laporan",
-
+    isAuthenticated,
     upload.fields([
         { name: "foto_stnk" },
         { name: "foto_bpkb" },
@@ -83,15 +78,12 @@ router.post(
         { name: "foto_kendaraan" },
         { name: "foto_tkp" }
     ]),
-
     async (req, res) => {
-
         try {
-
             const laporan = new Laporan({
+                userId: req.session.user.id, // 🔥 penting untuk history
 
                 nama_pelapor: req.body.nama_pelapor,
-
                 plat_nomor: req.body.plat_nomor,
                 nomor_rangka: req.body.nomor_rangka,
                 nomor_mesin: req.body.nomor_mesin,
@@ -109,37 +101,56 @@ router.post(
                 surat_leasing: req.files.surat_leasing?.[0]?.filename,
                 foto_ktp: req.files.foto_ktp?.[0]?.filename,
                 foto_kendaraan: req.files.foto_kendaraan?.[0]?.filename,
-                foto_tkp: req.files.foto_tkp?.[0]?.filename
+                foto_tkp: req.files.foto_tkp?.[0]?.filename,
 
+                status: "menunggu"
             });
 
             await laporan.save();
 
-            res.redirect("/");
-
+            res.redirect("/history");
         } catch (error) {
-
             console.log(error);
             res.send("Gagal mengirim laporan");
-
         }
     }
 );
 
-router.get("/profil", isAuthenticated, (req, res) => {
+router.get("/history", isAuthenticated, async (req, res) => {
+    try {
 
+        const laporan = await Laporan.find({
+            userId: req.session.user.id
+        }).sort({ createdAt: -1 });
+
+        res.render("users/history", {
+            currentPage: "history",
+            user: req.session.user,
+            laporan
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.send("Gagal ambil history laporan");
+    }
+});
+
+/* =========================
+   PROFIL
+========================= */
+router.get("/profil", isAuthenticated, (req, res) => {
     res.render("users/profil", {
         currentPage: "profil",
         user: req.session.user,
         message: null
     });
+});
 
-  });
-
+/* =========================
+   UPDATE PROFIL
+========================= */
 router.post("/profil/edit", isAuthenticated, async (req, res) => {
-
     try {
-
         const updatedUser = await User.findByIdAndUpdate(
             req.session.user.id,
             {
@@ -159,16 +170,10 @@ router.post("/profil/edit", isAuthenticated, async (req, res) => {
 
         res.redirect("/profil");
 
-    } catch(error) {
-
+    } catch (error) {
         console.log(error);
-        console.log(req.session.user.id)
-console.log(await User.findById(req.session.user.id))
         res.send("Gagal update profil");
-
     }
-
 });
-
 
 export default router;
