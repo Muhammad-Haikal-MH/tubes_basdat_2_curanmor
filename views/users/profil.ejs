@@ -6,20 +6,20 @@
 </head>
 
 <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const oldPasswordInput = document.getElementById("old_password");
+    const newPasswordField = document.getElementById("newPasswordField");
 
-  const oldPasswordInput = document.getElementById("old_password");
-  const newPasswordField = document.getElementById("newPasswordField");
+    if (!oldPasswordInput || !newPasswordField) return;
 
-  oldPasswordInput.addEventListener("input", () => {
-
-    if (oldPasswordInput.value.trim() !== "") {
-      newPasswordField.style.display = "block";
-    } else {
-      newPasswordField.style.display = "none";
-    }
-
+    oldPasswordInput.addEventListener("input", () => {
+      if (oldPasswordInput.value.trim() !== "") {
+        newPasswordField.style.display = "block";
+      } else {
+        newPasswordField.style.display = "none";
+      }
+    });
   });
-
 </script>
 
 <body>
@@ -37,13 +37,17 @@
             <!-- Header -->
             <div class="text-center mb-5">
 
-              <div
-                class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3"
-                style="width: 90px; height: 90px; font-size: 2rem; font-weight: bold;">
+              <% if (user.avatar) { %>
+                <img src="/uploads/<%= user.avatar %>" alt="Avatar" class="rounded-circle mb-3" style="width: 90px; height: 90px; object-fit: cover;">
+              <% } else { %>
+                <div
+                  class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3"
+                  style="width: 90px; height: 90px; font-size: 2rem; font-weight: bold;">
 
-                <%= user.nama.charAt(0).toUpperCase() %>
+                  <%= user.nama.charAt(0).toUpperCase() %>
 
-              </div>
+                </div>
+              <% } %>
 
               <h2 class="fw-bold mb-1">
                 Profil Saya
@@ -108,7 +112,14 @@
                       Foto Profil
                     </label>
 
+                    <% if (user.avatar) { %>
+                      <div class="mb-3">
+                        <img src="/uploads/<%= user.avatar %>" alt="Foto Profil Saat Ini" class="img-fluid rounded" style="max-width: 150px;">
+                      </div>
+                    <% } %>
+
                     <input type="file" name="avatar" class="form-control">
+                    <div class="form-text">Unggah foto baru untuk mengganti avatar Anda.</div>
 
                   </div>
 

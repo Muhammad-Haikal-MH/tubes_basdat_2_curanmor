@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import bcrypt from "bcrypt";
 import Laporan from "../models/Laporan.js";
 import User from "../models/User.js";
 import isAuthenticated from "../routes/middleware/authMiddleware.js";
@@ -139,24 +140,33 @@ router.get("/history", isAuthenticated, async (req, res) => {
    PROFIL
 ========================= */
 router.get("/profil", isAuthenticated, (req, res) => {
+    const message = req.session.message || null;
+    delete req.session.message;
+
     res.render("users/profil", {
         currentPage: "profil",
         user: req.session.user,
-        message: null
+        message
     });
 });
 
 /* =========================
    UPDATE PROFIL
 ========================= */
-router.post("/profil/edit", isAuthenticated, async (req, res) => {
+router.post("/profil/edit", isAuthenticated, upload.single("avatar"), async (req, res) => {
     try {
+        const updateData = {
+            nama: req.body.nama,
+            phone: req.body.phone
+        };
+
+        if (req.file?.filename) {
+            updateData.avatar = req.file.filename;
+        }
+
         const updatedUser = await User.findByIdAndUpdate(
             req.session.user.id,
-            {
-                nama: req.body.nama,
-                phone: req.body.phone
-            },
+            updateData,
             { new: true }
         );
 
@@ -165,14 +175,85 @@ router.post("/profil/edit", isAuthenticated, async (req, res) => {
             nama: updatedUser.nama,
             email: updatedUser.email,
             phone: updatedUser.phone,
+            avatar: updatedUser.avatar || req.session.user.avatar,
             role: updatedUser.role
+        };
+
+        req.session.message = {
+            type: "success",
+            text: "Profil berhasil diperbarui."
         };
 
         res.redirect("/profil");
 
     } catch (error) {
         console.log(error);
-        res.send("Gagal update profil");
+        req.session.message = {
+            type: "danger",
+            text: "Gagal update profil. Silakan coba lagi."
+        };
+        res.redirect("/profil");
+    }
+});
+
+/* =========================
+   UBAH PASSWORD
+========================= */
+router.post("/profil/password", isAuthenticated, async (req, res) => {
+    try {
+        const { old_password, new_password, confirm_password } = req.body;
+
+        if (!old_password || !new_password || !confirm_password) {
+            req.session.message = {
+                type: "danger",
+                text: "Semua field password harus diisi."
+            };
+            return res.redirect("/profil");
+        }
+
+        if (new_password !== confirm_password) {
+            req.session.message = {
+                type: "danger",
+                text: "Password baru dan konfirmasi harus sama."
+            };
+            return res.redirect("/profil");
+        }
+
+        const user = await User.findById(req.session.user.id);
+
+        if (!user) {
+            req.session.message = {
+                type: "danger",
+                text: "Pengguna tidak ditemukan."
+            };
+            return res.redirect("/profil");
+        }
+
+        const passwordMatch = await bcrypt.compare(old_password, user.password);
+        if (!passwordMatch) {
+            req.session.message = {
+                type: "danger",
+                text: "Password lama tidak cocok."
+            };
+            return res.redirect("/profil");
+        }
+
+        const hashedPassword = await bcrypt.hash(new_password, 10);
+        user.password = hashedPassword;
+        await user.save();
+
+        req.session.message = {
+            type: "success",
+            text: "Password berhasil diperbarui."
+        };
+        return res.redirect("/profil");
+    } catch (error) {
+        console.log(error);
+        req.session.message = {
+            type: "danger",
+            text: "Gagal memperbarui password. Silakan coba lagi."
+        };
+        return res.redirect("/profil");
     }
 });
 
