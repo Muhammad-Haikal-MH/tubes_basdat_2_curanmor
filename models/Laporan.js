@@ -29,7 +29,11 @@ const laporanSchema = new mongoose.Schema(
       type: String,
       enum: ["menunggu", "diproses", "selesai"],
       default: "menunggu"
-    }
+    },
+    catatan_polisi: {
+    type: String,
+    default: ""
+  }
   },
   {
     timestamps: true,
