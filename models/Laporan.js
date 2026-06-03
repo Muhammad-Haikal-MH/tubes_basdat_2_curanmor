@@ -25,15 +25,28 @@ const laporanSchema = new mongoose.Schema(
     foto_kendaraan: String,
     foto_tkp: String,
 
+    // ================= BAP =================
+    nomor_bap: {
+      type: String,
+      default: "",
+    },
+
+    tanggal_bap: {
+      type: Date,
+      default: Date.now,
+    },
+
+    catatan_polisi: {
+      type: String,
+      default: "",
+    },
+
+    // ================= STATUS =================
     status: {
       type: String,
       enum: ["menunggu", "diproses", "selesai"],
-      default: "menunggu"
+      default: "menunggu",
     },
-    catatan_polisi: {
-    type: String,
-    default: ""
-  }
   },
   {
     timestamps: true,
