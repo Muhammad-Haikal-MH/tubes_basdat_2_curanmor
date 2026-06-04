@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     try {
         const laporan = await Laporan.find({
             status: {
-                $in: ["diproses", "selesai"]
+                $in: ["diproses", "ditemukan", "selesai"]
             } 
         });
         
@@ -20,10 +20,15 @@ router.get("/", async (req, res) => {
             item => item.status === "selesai"
         ).length;
 
+        const totalDitemukan = laporan.filter(
+            item => item.status === "ditemukan"
+        ).length;
+
         res.render("polisi/dashboard", {
             laporan,
             totalDiproses,
-            totalSelesai
+            totalSelesai,
+            totalDitemukan
         });
     } catch(error) {
         console.log(error);
@@ -38,7 +43,7 @@ router.post("/laporan/:id/status", async (req, res) => {
             await Laporan.findByIdAndUpdate(
                 req.params.id,
                 {
-                    status: "selesai"
+                    status: req.body.status
                 }
             );
             res.redirect("/polisi");

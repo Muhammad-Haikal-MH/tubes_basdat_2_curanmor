@@ -18,19 +18,47 @@
 
     <div class="container-fluid p-4">
         <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body">
-                        <h6 class="text-muted">
-                            Laporan Diproses
-                        </h6>
-                        <h2 class="fw-bold text-warning">
-                            <%= totalDiproses %>
-                        </h2>
-                    </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Laporan Diproses
+                    </h6>
+                    <h2 class="fw-bold text-warning">
+                        <%= totalDiproses %>
+                    </h2>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Laporan Ditemukan
+                    </h6>
+                    <h2 class="fw-bold text-primary">
+                        <%= totalDitemukan %>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Laporan Selesai
+                    </h6>
+                    <h2 class="fw-bold text-success">
+                        <%= totalSelesai %>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body">
@@ -62,32 +90,72 @@
                                     </td>
 
                                     <td>
-                                        <span class="badge bg-warning text-dark">
-                                            Diproses
-                                        </span>
+                                        <% if(item.status === "diproses") { %>
+                                            <span class="badge bg-warning text-dark">
+                                                Diproses
+                                            </span>
+                                        <% } %>
+
+                                        <% if(item.status === "ditemukan") { %>
+                                            <span class="badge bg-primary">
+                                                Ditemukan
+                                            </span>
+                                        <% } %>
+
+                                        <% if(item.status === "selesai") { %>
+                                            <span class="badge bg-success">
+                                                Selesai
+                                            </span>
+                                        <% } %>
                                     </td>
 
                                     <td class="d-flex gap-2 flex-wrap">
-                                        <a 
+                                        <a
                                             href="/polisi/laporan/<%= item._id %>"
                                             class="btn btn-sm btn-info text-white"
                                         >
                                             Detail
                                         </a>
-
-                                        <form 
-                                            action="/polisi/laporan/<%= item._id %>/status"
-                                            method="POST"
-                                        >
-                                            <input 
-                                                type="hidden"
-                                                name="status"
-                                                value="selesai"
+                                        <% if(item.status === "diproses") { %>
+                                            <form
+                                                action="/polisi/laporan/<%= item._id %>/status"
+                                                method="POST"
                                             >
-                                            <button class="btn btn-sm btn-success">
-                                                Selesai
+                                                <input
+                                                    type="hidden"
+                                                    name="status"
+                                                    value="ditemukan"
+                                                >
+                                                <button class="btn btn-sm btn-primary">
+                                                    Ditemukan
+                                                </button>
+                                            </form>
+
+                                        <% } %>
+
+                                        <% if(item.status === "ditemukan") { %>
+                                            <form
+                                                action="/polisi/laporan/<%= item._id %>/status"
+                                                method="POST"
+                                            >
+                                                <input
+                                                    type="hidden"
+                                                    name="status"
+                                                    value="selesai"
+                                                >
+                                                <button class="btn btn-sm btn-success">
+                                                    Selesai
+                                                </button>
+                                            </form>
+                                        <% } %>
+                                        <% if(item.status === "selesai") { %>
+                                            <button
+                                                class="btn btn-sm btn-secondary"
+                                                disabled
+                                            >
+                                                Sudah Selesai
                                             </button>
-                                        </form>
+                                        <% } %>
                                     </td>
                                 </tr>
                             <% }) %>
