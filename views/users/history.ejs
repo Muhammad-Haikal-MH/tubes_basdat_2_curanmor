@@ -89,6 +89,12 @@
                                                                 Diproses
                                                             </span>
 
+                                                        <% } else if (status==="ditemukan" ) { %>
+
+                                                            <span class="badge bg-success px-3 py-2">
+                                                                Ditemukan
+                                                            </span>
+
                                                             <% } else { %>
 
                                                                 <span class="badge bg-success px-3 py-2">
@@ -203,7 +209,7 @@
                                                                 <div class="col-md-6">
                                                                     <p>
                                                                         <b>No HP:</b>
-                                                                        <%= l.no_hp %>
+                                                                        <%= l.nomor_pelapor %>
                                                                     </p>
                                                                 </div>
 
@@ -225,12 +231,6 @@
                                                                     <p><b>Plat:</b>
                                                                         <%= l.plat_nomor %>
                                                                     </p>
-                                                                    <p><b>Rangka:</b>
-                                                                        <%= l.nomor_rangka %>
-                                                                    </p>
-                                                                    <p><b>Mesin:</b>
-                                                                        <%= l.nomor_mesin %>
-                                                                    </p>
                                                                 </div>
 
                                                                 <div class="col-md-6">
@@ -242,6 +242,9 @@
                                                                     </p>
                                                                     <p><b>Tahun:</b>
                                                                         <%= l.tahun_pembuatan %>
+                                                                    </p>
+                                                                    <p><b>Tipe:</b>
+                                                                        <%= l.tipe_motor %>
                                                                     </p>
                                                                 </div>
 
@@ -300,36 +303,21 @@
                                                                     </div>
                                                                     <% } %>
 
-                                                                        <% if (l.foto_stnk) { %>
+                                                                        <% if (l.foto_tkp) { %>
                                                                             <div class="col-md-4">
-                                                                                <div class="card border-0 shadow-sm">
-                                                                                    <div class="card-body">
-                                                                                        <p class="fw-semibold">
-                                                                                            STNK
-                                                                                        </p>
-
-                                                                                        <img src="/uploads/<%= l.foto_stnk %>"
-                                                                                            class="img-fluid rounded">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <% } %>
-
-                                                                                <% if (l.foto_ktp) { %>
-                                                                                    <div class="col-md-4">
                                                                                         <div
                                                                                             class="card border-0 shadow-sm">
                                                                                             <div class="card-body">
                                                                                                 <p class="fw-semibold">
-                                                                                                    KTP
+                                                                                                    TKP
                                                                                                 </p>
 
-                                                                                                <img src="/uploads/<%= l.foto_ktp %>"
+                                                                                                <img src="/uploads/<%= l.foto_tkp %>"
                                                                                                     class="img-fluid rounded">
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <% } %>
+                                                                            </div>
+                                                                        <% } %>
 
                                                             </div>
 
