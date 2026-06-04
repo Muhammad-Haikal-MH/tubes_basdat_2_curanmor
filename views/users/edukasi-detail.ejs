@@ -1,0 +1,132 @@
+<%- include('../partials/header') %>
+
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="/edukasi" class="btn btn-outline-primary btn-sm rounded-pill">
+            <i class="bi bi-arrow-left"></i> Kembali ke Edukasi
+        </a>
+    </div>
+
+    <style>
+        .edu-highlight {
+            border-left: 5px solid #0d6efd;
+            background: rgba(13, 110, 253, 0.06);
+        }
+        .edu-step {
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .edu-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 38px rgba(13, 110, 253, 0.12);
+        }
+        .edu-badge {
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: rgba(13, 110, 253, 0.12);
+        }
+    </style>
+
+    <div class="text-center mb-5">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10" style="width: 90px; height: 90px;">
+            <i class="<%= detail.icon %> fs-1 text-primary"></i>
+        </div>
+        <h1 class="fw-bold mt-4"><%= detail.title %></h1>
+        <p class="lead text-muted mb-3"><%= detail.subtitle %></p>
+        <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3 rounded-pill">Baca lebih dalam agar lebih aman</span>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow rounded-4 h-100">
+                <div class="card-body p-5">
+                    <h3 class="fw-semibold mb-4">Mengapa ini penting?</h3>
+                    <p class="text-secondary fs-6 mb-4"><%= detail.text %></p>
+
+                    <div class="row g-3">
+                        <% detail.bullets.forEach((bullet, index) => { %>
+                            <div class="col-12">
+                                <div class="d-flex gap-3 align-items-start p-3 rounded-4 edu-highlight">
+                                    <div class="edu-badge text-primary fw-bold"><%= index + 1 %></div>
+                                    <div>
+                                        <h6 class="fw-semibold mb-1"><%= bullet %></h6>
+                                        <p class="text-muted small mb-0">Langkah praktis yang langsung bisa diterapkan.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow rounded-4 p-4 edu-step h-100">
+                <div class="card-body">
+                    <h4 class="fw-semibold mb-3">Intisari cepat</h4>
+                    <p class="text-secondary mb-4"><%= detail.highlight %></p>
+
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item bg-transparent border-0 p-0 mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="edu-badge text-primary"><i class="bi bi-lightning-fill"></i></div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Praktis</h6>
+                                    <p class="text-muted small mb-0">Ide yang mudah dipahami dan langsung berguna.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent border-0 p-0 mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="edu-badge text-primary"><i class="bi bi-people-fill"></i></div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Aman</h6>
+                                    <p class="text-muted small mb-0">Meningkatkan keselamatan kendaraan dan kenyamanan Anda.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent border-0 p-0">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="edu-badge text-primary"><i class="bi bi-trophy-fill"></i></div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Rekomendasi</h6>
+                                    <p class="text-muted small mb-0">Gunakan kombinasi tips untuk perlindungan maksimal.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12">
+            <h4 class="fw-bold mb-3">Lihat topik edukasi lain</h4>
+        </div>
+
+        <% Object.entries(edukasiTips).forEach(([key, tip]) => { %>
+            <div class="col-md-6">
+                <a href="/edukasi/<%= key %>" class="text-body text-decoration-none">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100 <% if (topic === key) { %>border-primary border-3<% } %>">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="fs-2 text-primary">
+                                <i class="<%= tip.icon %>"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 fw-semibold"><%= tip.title %></h5>
+                                <p class="mb-0 text-muted small"><%= tip.subtitle %></p>
+                            </div>
+                        </div>
+                        <p class="text-muted small mb-0"><%= tip.text.substring(0, 110) %>...</p>
+                    </div>
+                </a>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
