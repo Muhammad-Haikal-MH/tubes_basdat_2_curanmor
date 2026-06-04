@@ -44,7 +44,7 @@ const laporanSchema = new mongoose.Schema(
     // ================= STATUS =================
     status: {
       type: String,
-      enum: ["menunggu", "diproses", "selesai"],
+      enum: ["menunggu", "diproses", "ditemukan", "selesai"],
       default: "menunggu",
     },
   },

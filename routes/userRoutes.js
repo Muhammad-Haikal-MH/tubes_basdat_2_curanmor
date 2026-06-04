@@ -185,9 +185,6 @@ router.post(
   },
 );
 
-/* =========================
-   UBAH PASSWORD
-========================= */
 router.post("/profil/password", isAuthenticated, async (req, res) => {
   try {
     const { old_password, new_password, confirm_password } = req.body;
@@ -262,6 +259,27 @@ router.get("/surat/:id", isAuthenticated, async (req, res) => {
     }
 
     res.render("surat/bap_pelaporan", {
+      laporan,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send("Terjadi error");
+  }
+});
+
+router.get("/serah-terima/:id", isAuthenticated, async (req, res) => {
+  try {
+    const laporan = await Laporan.findById(req.params.id);
+
+    if (!laporan) {
+      return res.send("Laporan tidak ditemukan");
+    }
+
+    if (laporan.userId.toString() !== req.session.user.id) {
+      return res.send("Akses ditolak");
+    }
+
+    res.render("surat/bap_serah_terima", {
       laporan,
     });
   } catch (err) {

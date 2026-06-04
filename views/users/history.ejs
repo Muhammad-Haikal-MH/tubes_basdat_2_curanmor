@@ -119,10 +119,20 @@
                                             <td>
                                                 <% if (l.status==="diproses" ) { %> <a href="/surat/<%= l._id %>"
                                                         class="btn btn-sm btn-primary">
-                                                        <i class="bi bi-printer-fill"></i> Cetak </a>
-                                                    <% } else { %> <span class="text-muted fw-semibold"> - </span>
-                                                        <% } %>
+                                                        <i class="bi bi-printer-fill"></i> Cetak BAP Kehilangan</a>
+                                                        
+                                                    <% } else if (l.status==="ditemukan" ) { %>
+                                                        <a href="/serah-terima/<%= l._id %>"
+                                                            class="btn btn-sm btn-success">
+                                                            <i class="bi bi-file-earmark-check-fill"></i> Cetak BAP Serah Terima</a>
+
+                                                        <% } else { %>
+
+                                                            <span class="text-muted text-center">-</span>
+
+                                                            <% } %>
                                             </td>
+
 
                                         </tr>
 
