@@ -91,7 +91,7 @@
 
                                                         <% } else if (status==="ditemukan" ) { %>
 
-                                                            <span class="badge bg-success px-3 py-2">
+                                                            <span class="badge bg-primary px-3 py-2">
                                                                 Ditemukan
                                                             </span>
 
@@ -129,7 +129,7 @@
                                                         
                                                     <% } else if (l.status==="ditemukan" ) { %>
                                                         <a href="/serah-terima/<%= l._id %>"
-                                                            class="btn btn-sm btn-success">
+                                                            class="btn btn-sm btn-primary">
                                                             <i class="bi bi-file-earmark-check-fill"></i> Cetak BAP Serah Terima</a>
 
                                                         <% } else { %>
@@ -198,15 +198,12 @@
                                                             </h5>
 
                                                             <div class="row">
-
+                                                                
                                                                 <div class="col-md-6">
                                                                     <p>
                                                                         <b>Nama:</b>
                                                                         <%= l.nama_pelapor %>
                                                                     </p>
-                                                                </div>
-
-                                                                <div class="col-md-6">
                                                                     <p>
                                                                         <b>No HP:</b>
                                                                         <%= l.nomor_pelapor %>
@@ -218,7 +215,6 @@
 
                                                         <hr>
 
-                                                        <!-- DATA KENDARAAN -->
                                                         <div class="mb-4">
 
                                                             <h5 class="fw-bold mb-3">
@@ -227,23 +223,21 @@
 
                                                             <div class="row">
 
+                                                                
                                                                 <div class="col-md-6">
                                                                     <p><b>Plat:</b>
                                                                         <%= l.plat_nomor %>
                                                                     </p>
-                                                                </div>
-
-                                                                <div class="col-md-6">
                                                                     <p><b>Motor:</b>
                                                                         <%= l.merk_motor %> - <%= l.tipe_motor %>
                                                                     </p>
                                                                     <p><b>Warna:</b>
                                                                         <%= l.warna_motor %>
                                                                     </p>
-                                                                    <p><b>Tahun:</b>
+                                                                    <p><b>Tahun Pembuatan:</b>
                                                                         <%= l.tahun_pembuatan %>
                                                                     </p>
-                                                                    <p><b>Tipe:</b>
+                                                                    <p><b>Tipe Motor:</b>
                                                                         <%= l.tipe_motor %>
                                                                     </p>
                                                                 </div>
@@ -262,12 +256,12 @@
                                                             </h5>
 
                                                             <p>
-                                                                <b>Waktu:</b>
+                                                                <b>Waktu Kejadian:</b>
                                                                 <%= l.waktu_kejadian %>
                                                             </p>
 
                                                             <p>
-                                                                <b>Lokasi:</b>
+                                                                <b>Lokasi Kehilangan:</b>
                                                                 <%= l.lokasi_kehilangan %>
                                                             </p>
 
@@ -309,7 +303,7 @@
                                                                                             class="card border-0 shadow-sm">
                                                                                             <div class="card-body">
                                                                                                 <p class="fw-semibold">
-                                                                                                    TKP
+                                                                                                    Bukti TKP
                                                                                                 </p>
 
                                                                                                 <img src="/uploads/<%= l.foto_tkp %>"
