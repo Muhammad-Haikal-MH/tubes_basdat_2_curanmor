@@ -174,5 +174,34 @@
             </div>
         </div>
     </div>
+
+    <!-- CATATAN POLISI -->
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-3">
+                Catatan Polisi
+            </h4>
+            <form
+                action="/polisi/laporan/<%= laporan._id %>/catatan"
+                method="POST"
+            >
+                <textarea
+                    name="catatan_polisi"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Contoh: Silakan datang ke Polsek Dayeuhkolot membawa KTP asli, STNK, dan BPKB untuk proses BAP."
+                ><%= laporan.catatan_polisi || "" %></textarea>
+                <button
+                    type="submit"
+                    class="btn btn-primary mt-3"
+                >
+                    Simpan Catatan
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
+
+
+
 <%- include('../partials/dashboardFooter') %>

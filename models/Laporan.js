@@ -9,10 +9,10 @@ const laporanSchema = new mongoose.Schema(
     },
 
     nama_pelapor: String,
+    nomor_pelapor: String,
 
     plat_nomor: String,
-    nomor_rangka: String,
-    nomor_mesin: String,
+
     merk_motor: String,
     tipe_motor: String,
     warna_motor: String,
@@ -22,18 +22,31 @@ const laporanSchema = new mongoose.Schema(
     lokasi_kehilangan: String,
     kronologi: String,
 
-    foto_stnk: String,
-    foto_bpkb: String,
-    surat_leasing: String,
-    foto_ktp: String,
     foto_kendaraan: String,
     foto_tkp: String,
 
+    // ================= BAP =================
+    nomor_bap: {
+      type: String,
+      default: "",
+    },
+
+    tanggal_bap: {
+      type: Date,
+      default: Date.now,
+    },
+
+    catatan_polisi: {
+      type: String,
+      default: "",
+    },
+
+    // ================= STATUS =================
     status: {
       type: String,
-      enum: ["menunggu", "diproses", "selesai"],
-      default: "menunggu"
-    }
+      enum: ["menunggu", "diproses", "ditemukan", "selesai"],
+      default: "menunggu",
+    },
   },
   {
     timestamps: true,
