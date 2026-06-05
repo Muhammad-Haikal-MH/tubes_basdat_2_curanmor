@@ -130,9 +130,9 @@
     <button class="btn-print" onclick="window.print()">
         Cetak Surat
     </button>
-     <button class="btn-back" onclick="history.back()">
+ <a href="/polisi" class="btn-back" style="text-decoration: none;">
     Kembali
-    </button>
+  </a>
 
     <div class="container">
 
@@ -271,7 +271,7 @@
                     <td class="label">Tanggal Diserahkan</td>
                     <td>
                         :
-                        <%= new Date(laporan.tanggal_pengambilan).toLocaleDateString('id-ID',{
+                        <%= new Date(laporan.tanggal_penyerahan).toLocaleDateString('id-ID',{
                             day:'numeric',
                             month:'long',
                             year:'numeric'
@@ -297,7 +297,7 @@
 
         <tr>
           <td>
-            <br> <br>
+            <br>
             Pelapor
             <br><br><br><br><br>
 
@@ -306,8 +306,8 @@
 
           <td>
             Dayeuhkolot,
-            <%= new Date().toLocaleDateString('id-ID',{ day:'numeric', month:'long', year:'numeric' }) %>
-            <br> <br>
+            <%= new Date(laporan.tanggal_penyerahan).toLocaleDateString('id-ID',{ day:'numeric', month:'long', year:'numeric' }) %>
+            <br>
             Petugas Penerima Laporan
             <br><br><br><br><br>
 

@@ -217,10 +217,11 @@ router.post("/form_bast/:id", async (req, res) => {
 
     await Laporan.findByIdAndUpdate(req.params.id, {
       nama_penerima: req.body.nama_penerima,
+      nik_penerima: req.body.nik_penerima,
+      alamat_penerima: req.body.alamat_penerima,
       tanggal_ditemukan: req.body.tanggal_ditemukan,
-      tanggal_pengambilan: req.body.tanggal_pengambilan,
-      catatan_polisi: req.body.catatan_polisi,
-      status: "selesai",
+      tanggal_penyerahan: req.body.tanggal_penyerahan,
+      status: "ditemukan",
 
       bast_selesai: true,
     });

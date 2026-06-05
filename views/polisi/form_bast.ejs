@@ -1,145 +1,141 @@
 <%- include('../partials/dashboardHeader') %>
 
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
 
-            <div class="card border-0 shadow rounded-4">
-                <div class="card-body p-5">
+      <div class="card border-0 shadow rounded-4">
+        <div class="card-body p-5">
+            <a href="/polisi"
+   class="btn btn-primary position-fixed top-0 start-0 m-3 shadow">
+  Kembali
+</a>
+          <div class="text-center mb-5">
+            <h1 class="fw-bold">
+              <i class="bi bi-box-seam-fill text-primary"></i>
+              Form Berita Acara Serah Terima (BAST)
+            </h1>
 
-                    <div class="text-center mb-5">
-                        <h1 class="fw-bold">
-                            <i class="bi bi-box-seam-fill text-success"></i>
-                            Form Berita Acara Serah Terima (BAST)
-                        </h1>
+            <p class="text-muted">
+              Lengkapi data penyerahan kendaraan kepada pemilik yang sah.
+            </p>
+          </div>
 
-                        <p class="text-muted">
-                            Lengkapi data penyerahan kendaraan kepada pemilik yang sah.
-                        </p>
-                    </div>
+          <form action="/polisi/form_bast/<%= laporan._id %>" method="POST">
 
-                    <form action="/polisi/form_bast/<%= laporan._id %>" method="POST">
+            <h4 class="fw-bold mb-3">
+              Data Kendaraan
+            </h4>
 
-                        <h4 class="fw-bold mb-3">
-                            Data Kendaraan
-                        </h4>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Pemilik</label>
+                <input type="text" class="form-control" value="<%= laporan.nama_pelapor %>" readonly>
+              </div>
 
-                        <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nomor Polisi</label>
+                <input type="text" class="form-control" value="<%= laporan.plat_nomor %>" readonly>
+              </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nomor Polisi</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    value="<%= laporan.plat_nomor %>"
-                                    readonly>
-                            </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Merk Kendaraan</label>
+                <input type="text" class="form-control" value="<%= laporan.merk_motor %>" readonly>
+              </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Pemilik</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    value="<%= laporan.nama_pelapor %>"
-                                    readonly>
-                            </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Tipe Kendaraan</label>
+                <input type="text" class="form-control" value="<%= laporan.tipe_motor %>" readonly>
+              </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Merk Kendaraan</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    value="<%= laporan.merk_motor %>"
-                                    readonly>
-                            </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Warna Kendaraan</label>
+                <input type="text" class="form-control" value="<%= laporan.warna_motor %>" readonly>
+              </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Warna Kendaraan</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    value="<%= laporan.warna_motor %>"
-                                    readonly>
-                            </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Tahun Pembuatan</label>
+                <input type="text" class="form-control" value="<%= laporan.tahun_pembuatan %>" readonly>
+              </div>
 
-                        </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nomor Rangka</label>
+                <input type="text" class="form-control" value="<%= laporan.nomor_rangka %>" readonly>
+              </div>
 
-                        <hr>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nomor Mesin</label>
+                <input type="text" class="form-control" value="<%= laporan.nomor_mesin %>" readonly>
+              </div>
 
-                        <h4 class="fw-bold mb-3">
-                            Data Serah Terima
-                        </h4>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">STNK Atas Nama</label>
+                <input type="text" class="form-control" value="<%= laporan.stnk_atas_nama %>" readonly>
+              </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">
-                                Nama Penerima Barang
-                            </label>
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="nama_penerima"
-                                value="<%= laporan.nama_pelapor %>"
-                                required>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    Tanggal Kendaraan Ditemukan
-                                </label>
-
-                                <input
-                                    type="date"
-                                    class="form-control"
-                                    name="tanggal_ditemukan"
-                                    required>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    Tanggal Pengambilan
-                                </label>
-
-                                <input
-                                    type="date"
-                                    class="form-control"
-                                    name="tanggal_pengambilan"
-                                    required>
-                            </div>
-
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">
-                                Catatan Petugas (Opsional)
-                            </label>
-
-                            <textarea
-                                class="form-control"
-                                rows="4"
-                                name="catatan_polisi"></textarea>
-                        </div>
-
-                        <div class="d-grid">
-                            <button
-                                type="submit"
-                                class="btn btn-success btn-lg rounded-3">
-
-                                <i class="bi bi-save-fill"></i>
-                                Simpan & Cetak BAST
-
-                            </button>
-                        </div>
-
-                    </form>
-
-                </div>
             </div>
 
+            <hr>
+
+            <h4 class="fw-bold mb-3">
+              Data Serah Terima
+            </h4>
+
+            <div class="mb-3">
+              <label class="form-label">
+                Nama Penerima Barang
+              </label>
+              <input type="text" class="form-control" name="nama_penerima" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                NIK Penerima Barang
+              </label>
+              <input type="text" class="form-control" name="nik_penerima" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                Alamat Penerima Barang
+              </label>
+
+              <input type="text" class="form-control" name="alamat_penerima" required>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  Tanggal Kendaraan Ditemukan
+                </label>
+
+                <input type="date" class="form-control" name="tanggal_ditemukan" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  Tanggal Pengambilan
+                </label>
+
+                <input type="date" class="form-control" name="tanggal_penyerahan" required>
+              </div>
+
+        <div class="d-grid mt-12 col-6 mx-auto">
+
+          <button type="submit" class="btn btn-primary btn-lg">
+
+            <i class="bi bi-save-fill"></i>
+            Simpan Data Pemeriksaan
+
+          </button>
+
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <%- include('../partials/dashboardFooter') %>

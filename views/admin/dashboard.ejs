@@ -84,6 +84,7 @@
                     <table class="table align-middle">
                         <thead>
                             <tr>
+                                <th>Tanggal</th>
                                 <th>Pelapor</th>
                                 <th>Kendaraan</th>
                                 <th>Status</th>
@@ -93,6 +94,12 @@
                         <tbody>
                             <% laporan.forEach((item) => { %>
                                 <tr>
+                                    <td>
+                                        <%= new Date(item.createdAt).toLocaleDateString('id-ID', {
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric'
+                                        }) %>
                                     <td><%= item.nama_pelapor %></td>
                                     <td>
                                         <%= item.merk_motor %>
@@ -108,6 +115,11 @@
                                         <% if(item.status === "diproses") { %>
                                             <span class="badge bg-warning text-dark">
                                                 Diproses
+                                            </span>
+                                        <% } %>
+                                        <% if(item.status === "ditemukan") { %>
+                                            <span class="badge bg-primary">
+                                                Ditemukan
                                             </span>
                                         <% } %>
                                         <% if(item.status === "selesai") { %>
