@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Surat Tanda Penerimaan Laporan</title>
+
+  <style>
+    body {
+      line-height: 1.2;
+      font-family: "Times New Roman", serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .container {
+      width: 220mm;
+      min-height: 260mm;
+      margin: auto;
+      background: white;
+      padding: 20mm 25mm;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      width: 50%;
+      font-size: 14px;
+    }
+
+    .header-center {
+      text-align: center;
+    }
+
+    .logo {
+      width: 70px;
+      margin-bottom: 4px;
+    }
+
+    .judul {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .nomor {
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .content {
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    td {
+      padding: 4px;
+      vertical-align: top;
+    }
+
+    .label {
+      width: 200px;
+    }
+
+    .ttd {
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .ttd td {
+      text-align: center;
+    }
+
+
+    .btn-print {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #0d6efd;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    
+    .btn-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    }
+
+    @media print {
+      .btn-back, .btn-print {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      .container {
+        width: 100%;
+        margin: 0;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <button class="btn-print" onclick="window.print()">
+    Cetak Surat
+  </button>
+  <button class="btn-back" onclick="history.back()">
+    Kembali
+  </button>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+      <div class="header-left">
+        POLRI DAERAH JAWA BARAT<br>
+        RESOR KOTA BANDUNG<br>
+        SEKTOR DAYEUHKOLOT<br>
+
+        <div style=>
+          Jl. Raya Moch Toha No.109, Dayeuhkolot, 40257 <br>
+        </div>
+        "Pro Justitia"
+        <br><br>
+
+      </div>
+
+
+    </div>
+    <div class="header-center" ">
+
+<img src=" /assets/logo-polisi.jpg" class="logo">
+      <div class="judul">
+        SURAT TANDA PENERIMAAN LAPORAN
+        <hr>
+      </div>
+
+      <div class="nomor">
+        Nomor :
+        STPL/<%= laporan._id %>/SPKT/POLSEK-DAYEUHKOLOT
+      </div>
+
+    </div>
+
+    <!-- ISI -->
+    <div class="content">
+
+      <p>
+        Yang bertanda tangan di bawah ini menerangkan bahwa:
+      </p>
+
+      <table>
+
+        <tr>
+          <td class="label">Nama</td>
+          <td>: <%= laporan.nama_pelapor %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">NIK</td>
+          <td>: <%= laporan.nik %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Tempat, Tanggal Lahir</td>
+          <td>:
+            <%= laporan.tempat_lahir %>,
+            <%= new Date(laporan.tanggal_lahir).toLocaleDateString('id-ID',{ day:'numeric',
+                                month:'long', year:'numeric' }) %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Jenis Kelamin</td>
+          <td>: <%= laporan.jenis_kelamin %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Agama</td>
+          <td>: <%= laporan.agama %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Pekerjaan</td>
+          <td>: <%= laporan.pekerjaan %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Kewarganegaraan</td>
+          <td>: <%= laporan.kewarganegaraan %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Alamat</td>
+          <td>: <%= laporan.alamat_pelapor %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Nomor Telepon</td>
+          <td>: <%= laporan.nomor_pelapor %>
+          </td>
+        </tr>
+
+      </table>
+
+      <p>
+        Telah melaporkan/mengadukan terjadi peristiwa atau perkara: Tindak Pidana Pencurian,
+        sebagaimana dimaksud dalam Pasal 477 UU RI
+        No. 1 Tahun 2023, tentang KUHPidana.
+      </p>
+
+      <table>
+
+        <tr>
+          <td class="label">Tempat Kejadian Perkara (TKP)</td>
+          <td>: <%= laporan.lokasi_kehilangan %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Waktu Kejadian</td>
+          <td>:
+            <%= new Date(laporan.waktu_kejadian).toLocaleString('id-ID',{ weekday:'long', day:'numeric',
+                            month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' }) %>
+          </td>
+        </tr>
+
+      </table>
+
+      <p>
+        Adapun barang yang dilaporkan hilang adalah 1 (satu) Unit Sepeda Motor:
+      </p>
+
+      <table>
+
+        <tr>
+          <td class="label">Merk</td>
+          <td>: <%= laporan.merk_motor %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Tipe</td>
+          <td>: <%= laporan.tipe_motor %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Tahun Pembuatan</td>
+          <td>: <%= laporan.tahun_pembuatan %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Warna</td>
+          <td>: <%= laporan.warna_motor %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Nomor Polisi</td>
+          <td>: <%= laporan.plat_nomor %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Nomor Rangka</td>
+          <td>: <%= laporan.nomor_rangka %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Nomor Mesin</td>
+          <td>: <%= laporan.nomor_mesin %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">STNK Atas Nama</td>
+          <td>: <%= laporan.stnk_atas_nama %>
+          </td>
+        </tr>
+
+      </table>
+
+      <p>
+        Kronologi Kejadian:
+      </p>
+
+      <p style="text-indent:40px;">
+        <%= laporan.kronologi %>
+      </p>
+
+      <p>
+        Akibat kejadian tersebut pelapor mengalami kerugian sebesar
+        Rp.<%= Number(laporan.kerugian || 0).toLocaleString('id-ID') %>
+        (<%= laporan.kerugian_terbilang %>)
+      </p>
+
+      <p>
+        Demikian Surat Tanda Penerimaan Laporan ini dibuat dan diberikan kepada
+        pelapor untuk dipergunakan sebagaimana mestinya.
+      </p>
+
+      <!-- TTD -->
+      <table class="ttd">
+
+        <tr>
+          <td>
+            <br> <br>
+            Pelapor
+            <br><br><br><br><br>
+
+            <%= laporan.nama_pelapor %>
+          </td>
+
+          <td>
+            Dayeuhkolot,
+            <%= new Date().toLocaleDateString('id-ID',{ day:'numeric', month:'long', year:'numeric' }) %>
+            <br> <br>
+            Petugas Penerima Laporan
+            <br><br><br><br><br>
+
+            Petugas
+            <br>
+          </td>
+
+        </tr>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

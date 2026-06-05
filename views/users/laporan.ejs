@@ -1,178 +1,193 @@
 <%- include('../partials/header') %>
 
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-9">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
 
-                <div class="card border-0 shadow rounded-4">
-                    <div class="card-body p-5">
+      <div class="card border-0 shadow rounded-4">
+        <div class="card-body p-5">
 
-                        <div class="text-center mb-5">
-                            <h1 class="fw-bold">
-                                <i class="bi bi-exclamation-triangle-fill text-danger"></i>
-                                Form Laporan Kehilangan Motor
-                            </h1>
+          <div class="text-center mb-5">
+            <h1 class="fw-bold">
+              <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+              Form Laporan Kehilangan Motor
+            </h1>
 
-                            <p class="text-muted">
-                                Lengkapi data berikut untuk membantu proses pelaporan dan penyelidikan kendaraan hilang.
-                            </p>
-                        </div>
+            <p class="text-muted">
+              Lengkapi data berikut untuk membantu proses pelaporan dan penyelidikan kendaraan hilang.
+            </p>
+          </div>
 
-                        <form action="/laporan" method="POST" enctype="multipart/form-data">
+          <form action="/laporan" method="POST" enctype="multipart/form-data">
 
-                            <!-- DATA PELAPOR -->
-                            <h4 class="fw-bold mb-3">Data Pelapor</h4>
+            <!-- DATA PELAPOR -->
+            <h4 class="fw-bold mb-3">Data Pelapor</h4>
 
-                            <div class="mb-4">
-                                <label class="form-label">Nama Pelapor</label>
-                                <input type="text" class="form-control" name="nama_pelapor" required>
-                            </div>
+            <div class="mb-4">
+              <label class="form-label">Nama Pelapor</label>
+              <input type="text" class="form-control" name="nama_pelapor" required>
+            </div>
 
-                            <div class="mb-4">
-                                <label class="form-label">Nomor Telepon Pelapor</label>
-                                <input type="text" class="form-control" name="nomor_pelapor" required>
-                            </div>
+            <div class="mb-4">
+              <label class="form-label">Nomor Telepon Pelapor</label>
+              <input type="text" class="form-control" name="nomor_pelapor" required>
+            </div>
 
 
-                            <!-- DATA KENDARAAN -->
-                            <h4 class="fw-bold mb-3">Data Kendaraan</h4>
+            <!-- DATA KENDARAAN -->
+            <h4 class="fw-bold mb-3">Data Kendaraan</h4>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Nomor Polisi</label>
-                                    <input type="text" class="form-control" name="plat_nomor" required>
-                                </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nomor Polisi</label>
+                <input type="text" class="form-control" name="plat_nomor" required>
+              </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Merk Motor</label>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Merk Motor</label>
 
-                                    <select class="form-select mb-2" name="merk_motor" id="merk_motor"
-                                        onchange="toggleMerkLainnya()" required>
-                                        <option value="">Pilih Merk Motor</option>
-                                        <option value="Yamaha">Yamaha</option>
-                                        <option value="Honda">Honda</option>
-                                        <option value="Suzuki">Suzuki</option>
-                                        <option value="Kawasaki">Kawasaki</option>
-                                        <option value="Vespa">Vespa</option>
-                                        <option value="TVS">TVS</option>
-                                        <option value="Benelli">Benelli</option>
-                                        <option value="KTM">KTM</option>
-                                        <option value="Ducati">Ducati</option>
-                                        <option value="BMW">BMW</option>
-                                        <option value="Harley Davidson">Harley Davidson</option>
-                                        <option value="Royal Enfield">Royal Enfield</option>
-                                        <option value="Aprilia">Aprilia</option>
-                                        <option value="Triumph">Triumph</option>
-                                        <option value="Moto Guzzi">Moto Guzzi</option>
-                                        <option value="CFMoto">CFMoto</option>
-                                        <option value="SM Sport">SM Sport</option>
-                                        <option value="Gesits">Gesits</option>
-                                        <option value="United">United</option>
-                                        <option value="Lainnya">Lainnya</option>
-                                    </select>
+                <select class="form-select mb-2" name="merk_motor" id="merk_motor" onchange="toggleMerkLainnya()" required>
+                  <option value="">Pilih Merk Motor</option>
+                  <option value="Yamaha">Yamaha</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Suzuki">Suzuki</option>
+                  <option value="Kawasaki">Kawasaki</option>
+                  <option value="Vespa">Vespa</option>
+                  <option value="TVS">TVS</option>
+                  <option value="Benelli">Benelli</option>
+                  <option value="KTM">KTM</option>
+                  <option value="Ducati">Ducati</option>
+                  <option value="BMW">BMW</option>
+                  <option value="Harley Davidson">Harley Davidson</option>
+                  <option value="Royal Enfield">Royal Enfield</option>
+                  <option value="Aprilia">Aprilia</option>
+                  <option value="Triumph">Triumph</option>
+                  <option value="Moto Guzzi">Moto Guzzi</option>
+                  <option value="CFMoto">CFMoto</option>
+                  <option value="SM Sport">SM Sport</option>
+                  <option value="Gesits">Gesits</option>
+                  <option value="United">United</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
 
-                                    <!-- Input tambahan -->
-                                    <input type="text" class="form-control d-none" id="merk_lainnya" name="merk_lainnya"
-                                        placeholder="Masukkan merk motor lainnya">
-                                </div>
+                <!-- Input tambahan -->
+                <input type="text" class="form-control d-none" id="merk_lainnya" name="merk_lainnya" placeholder="Masukkan merk motor lainnya">
+              </div>
 
-                                <script>
-                                    function toggleMerkLainnya() {
-                                        const merkMotor = document.getElementById('merk_motor');
-                                        const merkLainnya = document.getElementById('merk_lainnya');
+              <script>
+                function toggleMerkLainnya() {
+                  const merkMotor = document.getElementById('merk_motor');
+                  const merkLainnya = document.getElementById('merk_lainnya');
 
-                                        if (merkMotor.value === 'Lainnya') {
-                                            merkLainnya.classList.remove('d-none');
-                                            merkLainnya.required = true;
-                                        } else {
-                                            merkLainnya.classList.add('d-none');
-                                            merkLainnya.required = false;
-                                            merkLainnya.value = '';
-                                        }
-                                    }
-                                </script>
+                  if (merkMotor.value === 'Lainnya') {
+                    merkLainnya.classList.remove('d-none');
+                    merkLainnya.required = true;
+                  } else {
+                    merkLainnya.classList.add('d-none');
+                    merkLainnya.required = false;
+                    merkLainnya.value = '';
+                  }
+                }
+              </script>
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Tipe Motor</label>
-                                        <input type="text" class="form-control" name="tipe_motor" required>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Warna Motor</label>
-                                        <select class="form-select" name="warna_motor" required>
-                                            <option value="">Pilih Warna Motor</option>
-                                            <option value="Hitam">Hitam</option>
-                                            <option value="Putih">Putih</option>
-                                            <option value="Merah">Merah</option>
-                                            <option value="Biru">Biru</option>
-                                            <option value="Silver">Silver</option>
-                                            <option value="Abu-abu">Abu-abu</option>
-                                            <option value="Hijau">Hijau</option>
-                                            <option value="Kuning">Kuning</option>
-                                            <option value="Orange">Orange</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label">Tahun Pembuatan</label>
-                                        <input type="number" class="form-control" name="tahun_pembuatan" required>
-                                    </div>
-
-                                    <!-- KRONOLOGI -->
-                                    <h4 class="fw-bold mb-3">Kronologi & TKP</h4>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">
-                                            Waktu Kejadian
-                                        </label>
-                                        <input type="datetime-local" class="form-control" name="waktu_kejadian"
-                                            required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">
-                                            Lokasi Kehilangan
-                                        </label>
-                                        <textarea class="form-control" name="lokasi_kehilangan" rows="3"
-                                            required></textarea>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label">
-                                            Kronologi Kehilangan
-                                        </label>
-                                        <textarea class="form-control" name="kronologi" rows="5" required></textarea>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">
-                                            Foto Kendaraan (Wajib)
-                                        </label>
-                                        <input type="file" class="form-control" name="foto_kendaraan" required>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label">
-                                            Foto TKP / CCTV (Opsional)
-                                        </label>
-                                        <input type="file" class="form-control" name="foto_tkp">
-                                    </div>
-
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary btn-lg rounded-3">
-                                            <i class="bi bi-send-fill"></i>
-                                            Kirim Laporan
-                                        </button>
-                                    </div>
-
-                        </form>
-
-                    </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Tipe Motor</label>
+                  <input type="text" class="form-control" name="tipe_motor" required>
                 </div>
 
-            </div>
-        </div>
-    </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Warna Motor</label>
+                  <select class="form-select" name="warna_motor" required id="warna_motor" onchange="toggleWarnaLainnya()">
+                    <option value="">Pilih Warna Motor</option>
+                    <option value="Hitam">Hitam</option>
+                    <option value="Putih">Putih</option>
+                    <option value="Merah">Merah</option>
+                    <option value="Biru">Biru</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Abu-abu">Abu-abu</option>
+                    <option value="Hijau">Hijau</option>
+                    <option value="Kuning">Kuning</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                  <input type="text" class="form-control d-none" id="warna_lainnya" name="warna_lainnya" placeholder="Masukkan warna motor lainnya" style="margin-top: 10px;">
+                </div>
 
-    <%- include('../partials/footer') %>
+                <script>
+                  function toggleWarnaLainnya() {
+                    const warnaMotor = document.getElementById('warna_motor');
+                    const warnaLainnya = document.getElementById('warna_lainnya');
+
+                    if (warnaMotor.value === 'Lainnya') {
+                      warnaLainnya.classList.remove('d-none');
+                      warnaLainnya.required = true;
+                    } else {
+                      warnaLainnya.classList.add('d-none');
+                      warnaLainnya.required = false;
+                      warnaLainnya.value = '';
+                    }
+                  }
+                </script>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">Tahun Pembuatan</label>
+                <input type="number" class="form-control" name="tahun_pembuatan" required>
+              </div>
+
+              <!-- KRONOLOGI -->
+              <h4 class="fw-bold mb-3">Kronologi & TKP</h4>
+
+              <div class="mb-3">
+                <label class="form-label">
+                  Waktu Kejadian
+                </label>
+                <input type="datetime-local" class="form-control" name="waktu_kejadian" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">
+                  Lokasi Kehilangan
+                </label>
+                <textarea class="form-control" name="lokasi_kehilangan" rows="3" required></textarea>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">
+                  Kronologi Kehilangan
+                </label>
+                <textarea class="form-control" name="kronologi" rows="5" required></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">
+                  Foto Kendaraan (Wajib)
+                </label>
+                <input type="file" class="form-control" name="foto_kendaraan" required>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">
+                  Foto TKP / CCTV (Opsional)
+                </label>
+                <input type="file" class="form-control" name="foto_tkp">
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg rounded-3">
+                  <i class="bi bi-send-fill"></i>
+                  Kirim Laporan
+                </button>
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

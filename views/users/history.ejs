@@ -1,343 +1,318 @@
 <%- include('../partials/header') %>
 
-    <div class="container py-5 min-vh-100">
+<div class="container py-5 min-vh-100">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h3 class="fw-bold mb-1">History Laporan Saya</h3>
-                <p class="text-muted mb-0">
-                    Riwayat laporan kehilangan kendaraan bermotor
-                </p>
-            </div>
-        </div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1">History Laporan Saya</h3>
+      <p class="text-muted mb-0">
+        Riwayat laporan kehilangan kendaraan bermotor
+      </p>
+    </div>
+  </div>
 
-        <% if (laporan.length===0) { %>
+  <% if (laporan.length===0) { %>
 
-            <div class="alert alert-light border text-center py-5">
-                <i class="bi bi-inbox fs-1 text-secondary"></i>
+  <div class="alert alert-light border text-center py-5">
+    <i class="bi bi-inbox fs-1 text-secondary"></i>
 
-                <h5 class="mt-3">Belum Ada Laporan</h5>
+    <h5 class="mt-3">Belum Ada Laporan</h5>
 
-                <p class="text-muted mb-0">
-                    Kamu belum membuat laporan kehilangan kendaraan.
-                </p>
-            </div>
+    <p class="text-muted mb-0">
+      Kamu belum membuat laporan kehilangan kendaraan.
+    </p>
+  </div>
 
-            <% } else { %>
+  <% } else { %>
 
-                <div class="card border-0 shadow-sm rounded-4">
-                    <div class="card-body">
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body">
 
-                        <div class="table-responsive">
+      <div class="table-responsive">
 
-                            <table class="table align-middle table-hover">
+        <table class="table align-middle table-hover">
 
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Plat Nomor</th>
-                                        <th>Kendaraan</th>
-                                        <th>Lokasi</th>
-                                        <th>Tanggal</th>
-                                        <th>Status</th>
-                                        <th>Aksi</th>
-                                        <th>Cetak BAP</th>
-                                    </tr>
-                                </thead>
+          <thead class="table-light">
+            <tr>
+              <th>Plat Nomor</th>
+              <th>Kendaraan</th>
+              <th>Lokasi</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
 
-                                <tbody>
+          <tbody>
 
-                                    <% laporan.forEach(l=> { %>
+            <% laporan.forEach(l=> { %>
 
-                                        <!-- ROW UTAMA -->
-                                        <tr>
+            <!-- ROW UTAMA -->
+            <tr>
 
-                                            <td class="fw-semibold">
-                                                <%= l.plat_nomor %>
-                                            </td>
+              <td class="fw-semibold">
+                <%= l.plat_nomor %>
+              </td>
 
-                                            <td>
-                                                <div class="fw-semibold">
-                                                    <%= l.merk_motor %>
-                                                </div>
-
-                                                <small class="text-muted">
-                                                    <%= l.tipe_motor %> • <%= l.warna_motor %>
-                                                </small>
-                                            </td>
-
-                                            <td>
-                                                <%= l.lokasi_kehilangan %>
-                                            </td>
-
-                                            <td>
-                                                <%= new Date(l.createdAt).toLocaleString() %>
-                                            </td>
-
-                                            <td>
-
-                                                <% const status=l.status || "menunggu" ; %>
-
-                                                    <% if (status==="menunggu" ) { %>
-
-                                                        <span class="badge bg-warning text-dark px-3 py-2">
-                                                            Menunggu
-                                                        </span>
-
-                                                        <% } else if (status==="diproses" ) { %>
-
-                                                            <span class="badge bg-primary px-3 py-2">
-                                                                Diproses
-                                                            </span>
-
-                                                        <% } else if (status==="ditemukan" ) { %>
-
-                                                            <span class="badge bg-primary px-3 py-2">
-                                                                Ditemukan
-                                                            </span>
-
-                                                            <% } else { %>
-
-                                                                <span class="badge bg-success px-3 py-2">
-                                                                    Selesai
-                                                                </span>
-
-                                                                <% } %>
-
-                                            </td>
-
-                                            <!-- AKSI -->
-                                            <td>
-
-                                                <div class="d-flex flex-wrap gap-2">
-
-                                                    <!-- DETAIL -->
-                                                    <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
-                                                        data-bs-target="#detail<%= l._id %>">
-
-                                                        <i class="bi bi-eye-fill"></i>
-                                                        Detail
-                                                    </button>
-                                                </div>
-
-                                            </td>
-
-                                            <!-- CETAK BAP -->
-                                            <td>
-                                                <% if (l.status==="diproses" ) { %> <a href="/surat/<%= l._id %>"
-                                                        class="btn btn-sm btn-primary">
-                                                        <i class="bi bi-printer-fill"></i> Cetak BAP Kehilangan</a>
-                                                        
-                                                    <% } else if (l.status==="ditemukan" ) { %>
-                                                        <a href="/serah-terima/<%= l._id %>"
-                                                            class="btn btn-sm btn-primary">
-                                                            <i class="bi bi-file-earmark-check-fill"></i> Cetak BAP Serah Terima</a>
-
-                                                        <% } else { %>
-
-                                                            <span class="text-muted text-center">-</span>
-
-                                                            <% } %>
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- CATATAN POLISI -->
-                                        <tr>
-                                            <td colspan="7">
-
-                                                <div class="bg-light border rounded-3 p-3">
-
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <i class="bi bi-shield-check text-primary me-2"></i>
-
-                                                        <strong>Catatan dari Polisi</strong>
-                                                    </div>
-
-                                                    <% if (l.catatan_polisi) { %>
-
-                                                        <p class="mb-0 text-secondary">
-                                                            <%= l.catatan_polisi %>
-                                                        </p>
-
-                                                        <% } else { %>
-
-                                                            <p class="mb-0 text-muted">
-                                                                Belum ada catatan dari petugas.
-                                                            </p>
-
-                                                            <% } %>
-
-                                                </div>
-
-                                            </td>
-                                        </tr>
-
-                                        <!-- ================= MODAL DETAIL ================= -->
-                                        <div class="modal fade" id="detail<%= l._id %>" tabindex="-1">
-
-                                            <div class="modal-dialog modal-xl">
-
-                                                <div class="modal-content border-0 shadow">
-
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title fw-bold">
-                                                            Detail Laporan
-                                                        </h5>
-
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="modal-body">
-
-                                                        <!-- DATA PELAPOR -->
-                                                        <div class="mb-4">
-                                                            <h5 class="fw-bold mb-3">
-                                                                Data Pelapor
-                                                            </h5>
-
-                                                            <div class="row">
-                                                                
-                                                                <div class="col-md-6">
-                                                                    <p>
-                                                                        <b>Nama:</b>
-                                                                        <%= l.nama_pelapor %>
-                                                                    </p>
-                                                                    <p>
-                                                                        <b>No HP:</b>
-                                                                        <%= l.nomor_pelapor %>
-                                                                    </p>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-
-                                                        <hr>
-
-                                                        <div class="mb-4">
-
-                                                            <h5 class="fw-bold mb-3">
-                                                                Data Kendaraan
-                                                            </h5>
-
-                                                            <div class="row">
-
-                                                                
-                                                                <div class="col-md-6">
-                                                                    <p><b>Plat:</b>
-                                                                        <%= l.plat_nomor %>
-                                                                    </p>
-                                                                    <p><b>Motor:</b>
-                                                                        <%= l.merk_motor %> - <%= l.tipe_motor %>
-                                                                    </p>
-                                                                    <p><b>Warna:</b>
-                                                                        <%= l.warna_motor %>
-                                                                    </p>
-                                                                    <p><b>Tahun Pembuatan:</b>
-                                                                        <%= l.tahun_pembuatan %>
-                                                                    </p>
-                                                                    <p><b>Tipe Motor:</b>
-                                                                        <%= l.tipe_motor %>
-                                                                    </p>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        <hr>
-
-                                                        <!-- KRONOLOGI -->
-                                                        <div class="mb-4">
-
-                                                            <h5 class="fw-bold mb-3">
-                                                                Kronologi Kejadian
-                                                            </h5>
-
-                                                            <p>
-                                                                <b>Waktu Kejadian:</b>
-                                                                <%= l.waktu_kejadian %>
-                                                            </p>
-
-                                                            <p>
-                                                                <b>Lokasi Kehilangan:</b>
-                                                                <%= l.lokasi_kehilangan %>
-                                                            </p>
-
-                                                            <div class="bg-light rounded-3 p-3 border">
-                                                                <%= l.kronologi %>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <hr>
-
-                                                        <!-- FOTO -->
-                                                        <div>
-
-                                                            <h5 class="fw-bold mb-3">
-                                                                Dokumentasi
-                                                            </h5>
-
-                                                            <div class="row g-3">
-
-                                                                <% if (l.foto_kendaraan) { %>
-                                                                    <div class="col-md-4">
-                                                                        <div class="card border-0 shadow-sm">
-                                                                            <div class="card-body">
-                                                                                <p class="fw-semibold">
-                                                                                    Foto Kendaraan
-                                                                                </p>
-
-                                                                                <img src="/uploads/<%= l.foto_kendaraan %>"
-                                                                                    class="img-fluid rounded">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <% } %>
-
-                                                                        <% if (l.foto_tkp) { %>
-                                                                            <div class="col-md-4">
-                                                                                        <div
-                                                                                            class="card border-0 shadow-sm">
-                                                                                            <div class="card-body">
-                                                                                                <p class="fw-semibold">
-                                                                                                    Bukti TKP
-                                                                                                </p>
-
-                                                                                                <img src="/uploads/<%= l.foto_tkp %>"
-                                                                                                    class="img-fluid rounded">
-                                                                                            </div>
-                                                                                        </div>
-                                                                            </div>
-                                                                        <% } %>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <% }) %>
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
+              <td>
+                <div class="fw-semibold">
+                  <%= l.merk_motor %>
                 </div>
+
+                <small class="text-muted">
+                  <%= l.tipe_motor %> • <%= l.warna_motor %>
+                </small>
+              </td>
+
+              <td>
+                <%= l.lokasi_kehilangan %>
+              </td>
+
+              <td>
+                <%= new Date(l.createdAt).toLocaleString() %>
+              </td>
+
+              <td>
+
+                <% const status=l.status || "menunggu" ; %>
+
+                <% if (status==="menunggu" ) { %>
+
+                <span class="badge bg-warning text-dark px-3 py-2">
+                  Menunggu
+                </span>
+
+                <% } else if (status==="diproses" ) { %>
+
+                <span class="badge bg-primary px-3 py-2">
+                  Diproses
+                </span>
+
+                <% } else if (status==="ditemukan" ) { %>
+
+                <span class="badge bg-primary px-3 py-2">
+                  Ditemukan
+                </span>
+
+                <% } else { %>
+
+                <span class="badge bg-success px-3 py-2">
+                  Selesai
+                </span>
 
                 <% } %>
 
-    </div>
+              </td>
 
-    <%- include('../partials/footer') %>
+              <!-- AKSI -->
+              <td>
+
+                <div class="d-flex flex-wrap gap-2">
+
+                  <!-- DETAIL -->
+                  <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#detail<%= l._id %>">
+
+                    <i class="bi bi-eye-fill"></i>
+                    Detail
+                  </button>
+                </div>
+
+              </td>
+            </tr>
+
+            <!-- CATATAN POLISI -->
+            <tr>
+              <td colspan="7">
+
+                <div class="bg-light border rounded-3 p-3">
+
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-shield-check text-primary me-2"></i>
+
+                    <strong>Catatan dari Polisi</strong>
+                  </div>
+
+                  <% if (l.catatan_polisi) { %>
+
+                  <p class="mb-0 text-secondary">
+                    <%= l.catatan_polisi %>
+                  </p>
+
+                  <% } else { %>
+
+                  <p class="mb-0 text-muted">
+                    Belum ada catatan dari petugas.
+                  </p>
+
+                  <% } %>
+
+                </div>
+
+              </td>
+            </tr>
+
+            <!-- ================= MODAL DETAIL ================= -->
+            <div class="modal fade" id="detail<%= l._id %>" tabindex="-1">
+
+              <div class="modal-dialog modal-xl">
+
+                <div class="modal-content border-0 shadow">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-bold">
+                      Detail Laporan
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+
+                    <!-- DATA PELAPOR -->
+                    <div class="mb-4">
+                      <h5 class="fw-bold mb-3">
+                        Data Pelapor
+                      </h5>
+
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <p>
+                            <b>Nama:</b>
+                            <%= l.nama_pelapor %>
+                          </p>
+                          <p>
+                            <b>No HP:</b>
+                            <%= l.nomor_pelapor %>
+                          </p>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-4">
+
+                      <h5 class="fw-bold mb-3">
+                        Data Kendaraan
+                      </h5>
+
+                      <div class="row">
+
+
+                        <div class="col-md-6">
+                          <p><b>Plat:</b>
+                            <%= l.plat_nomor %>
+                          </p>
+                          <p><b>Motor:</b>
+                            <%= l.merk_motor %> - <%= l.tipe_motor %>
+                          </p>
+                          <p><b>Warna:</b>
+                            <%= l.warna_motor %>
+                          </p>
+                          <p><b>Tahun Pembuatan:</b>
+                            <%= l.tahun_pembuatan %>
+                          </p>
+                          <p><b>Tipe Motor:</b>
+                            <%= l.tipe_motor %>
+                          </p>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <hr>
+
+                    <!-- KRONOLOGI -->
+                    <div class="mb-4">
+
+                      <h5 class="fw-bold mb-3">
+                        Kronologi Kejadian
+                      </h5>
+
+                      <p>
+                        <b>Waktu Kejadian:</b>
+                        <%= l.waktu_kejadian %>
+                      </p>
+
+                      <p>
+                        <b>Lokasi Kehilangan:</b>
+                        <%= l.lokasi_kehilangan %>
+                      </p>
+
+                      <div class="bg-light rounded-3 p-3 border">
+                        <%= l.kronologi %>
+                      </div>
+
+                    </div>
+
+                    <hr>
+
+                    <!-- FOTO -->
+                    <div>
+
+                      <h5 class="fw-bold mb-3">
+                        Dokumentasi
+                      </h5>
+
+                      <div class="row g-3">
+
+                        <% if (l.foto_kendaraan) { %>
+                        <div class="col-md-4">
+                          <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                              <p class="fw-semibold">
+                                Foto Kendaraan
+                              </p>
+
+                              <img src="/uploads/<%= l.foto_kendaraan %>" class="img-fluid rounded">
+                            </div>
+                          </div>
+                        </div>
+                        <% } %>
+
+                        <% if (l.foto_tkp) { %>
+                        <div class="col-md-4">
+                          <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                              <p class="fw-semibold">
+                                Bukti TKP
+                              </p>
+
+                              <img src="/uploads/<%= l.foto_tkp %>" class="img-fluid rounded">
+                            </div>
+                          </div>
+                        </div>
+                        <% } %>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <% }) %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+  <% } %>
+
+</div>
+
+<%- include('../partials/footer') %>

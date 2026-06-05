@@ -1,0 +1,202 @@
+<%- include('../partials/dashboardHeader') %>
+
+<div class="container py-5">
+
+  <div class="card shadow border-0">
+    <div class="card-body p-4">
+
+      <h2 class="mb-4">
+        <i class="bi bi-file-earmark-text-fill text-primary"></i>
+        Form Pemeriksaan Polisi
+      </h2>
+
+      <p class="text-muted">
+        Lengkapi data pemeriksaan untuk penerbitan Surat Tanda Penerimaan Laporan (STPL)
+        dan Berita Acara Pemeriksaan (BAP).
+      </p>
+
+      <form action="/polisi/form_bap/<%= laporan._id %>" method="POST">
+        <!-- ================= DATA PELAPOR ================= -->
+        <h4 class="fw-bold mt-4 mb-3">
+          Data Pelapor
+        </h4>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nama Pelapor</label>
+            <input type="text" class="form-control" value="<%= laporan.nama_pelapor %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nomor Telepon</label>
+            <input type="text" class="form-control" value="<%= laporan.nomor_pelapor %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">NIK</label>
+            <input type="text" class="form-control" name="nik" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tempat Lahir</label>
+            <input type="text" class="form-control" name="tempat_lahir" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tanggal Lahir</label>
+            <input type="date" class="form-control" name="tanggal_lahir" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Jenis Kelamin</label>
+            <select class="form-select" name="jenis_kelamin" required>
+              <option value="">Pilih</option>
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Agama</label>
+            <select class="form-select" name="agama" required>
+
+              <option value="">Pilih Agama</option>
+              <option>Islam</option>
+              <option>Kristen</option>
+              <option>Katolik</option>
+              <option>Hindu</option>
+              <option>Buddha</option>
+              <option>Konghucu</option>
+
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Pekerjaan</label>
+            <input type="text" class="form-control" name="pekerjaan" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Kewarganegaraan</label>
+            <input type="text" class="form-control" name="kewarganegaraan" value="Indonesia" required>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Alamat Lengkap</label>
+            <textarea class="form-control" rows="3" name="alamat_pelapor" required></textarea>
+          </div>
+
+        </div>
+
+        <hr>
+
+        <!-- ================= DATA KENDARAAN ================= -->
+        <h4 class="fw-bold mb-3">
+          Data Kendaraan
+        </h4>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nomor Polisi</label>
+            <input type="text" class="form-control" value="<%= laporan.plat_nomor %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Merk Kendaraan</label>
+            <input type="text" class="form-control" value="<%= laporan.merk_motor %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tipe Kendaraan</label>
+            <input type="text" class="form-control" value="<%= laporan.tipe_motor %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Warna Kendaraan</label>
+            <input type="text" class="form-control" value="<%= laporan.warna_motor %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tahun Pembuatan</label>
+            <input type="text" class="form-control" value="<%= laporan.tahun_pembuatan %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nomor Rangka</label>
+            <input type="text" class="form-control" name="nomor_rangka" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nomor Mesin</label>
+            <input type="text" class="form-control" name="nomor_mesin" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">STNK Atas Nama</label>
+            <input type="text" class="form-control" name="stnk_atas_nama" required>
+          </div>
+
+        </div>
+
+        <hr>
+
+        <!-- ================= DATA KEJADIAN ================= -->
+        <h4 class="fw-bold mb-3">
+          Data Kejadian
+        </h4>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Waktu Kejadian</label>
+            <input type="text" class="form-control" value="<%= new Date(laporan.waktu_kejadian).toLocaleString('id-ID') %>" readonly>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Lokasi Kejadian</label>
+            <input type="text" class="form-control" value="<%= laporan.lokasi_kehilangan %>" readonly>
+          </div>
+
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            Kronologi
+          </label>
+
+          <textarea class="form-control" rows="8" name="kronologi_polisi" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            Kerugian (Rp)
+          </label>
+
+          <input type="number" class="form-control" name="kerugian" required>
+        </div>
+
+        <hr>
+
+    </div>
+
+    <div class="d-grid mt-12">
+
+      <button type="submit" class="btn btn-success btn-lg">
+
+        <i class="bi bi-save-fill"></i>
+        Simpan Data Pemeriksaan
+
+      </button>
+
+    </div>
+
+    </form>
+
+  </div>
+</div>
+
+</div>
+
+<%- include('../partials/dashboardFooter') %>

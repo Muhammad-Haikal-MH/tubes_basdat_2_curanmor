@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Berita Acara Serah Terima Kendaraan</title>
+
+  <style>
+    body {
+      line-height: 1.2;
+      font-family: "Times New Roman", serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .container {
+      width: 220mm;
+      min-height: 260mm;
+      margin: auto;
+      background: white;
+      padding: 20mm 25mm;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      width: 50%;
+      font-size: 14px;
+    }
+
+    .header-center {
+      text-align: center;
+    }
+
+    .logo {
+      width: 70px;
+      margin-bottom: 4px;
+    }
+
+    .judul {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .nomor {
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .content {
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    td {
+      padding: 4px;
+      vertical-align: top;
+    }
+
+    .label {
+      width: 200px;
+    }
+
+    .ttd {
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .ttd td {
+      text-align: center;
+    }
+
+
+    .btn-print {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #0d6efd;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    }
+
+    @media print {
+      .btn-back, .btn-print {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      .container {
+        width: 100%;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+    <button class="btn-print" onclick="window.print()">
+        Cetak Surat
+    </button>
+     <button class="btn-back" onclick="history.back()">
+    Kembali
+    </button>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+
+            <div class="header-left">
+                POLRI DAERAH JAWA BARAT<br>
+                RESOR KOTA BANDUNG<br>
+                SEKTOR DAYEUHKOLOT<br>
+
+                Jl. Raya Moch Toha No.109, Dayeuhkolot, 40257 <br>
+                "Pro Justitia"
+            </div>
+
+        </div>
+
+        <div class="header-center">
+
+            <img src="/assets/logo-polisi.jpg" class="logo">
+
+            <div class="judul">
+                BERITA ACARA SERAH TERIMA KENDARAAN
+                <hr>
+            </div>
+
+            <div class="nomor">
+                Nomor :
+                BAST/<%= laporan._id %>/SPKT/POLSEK-DAYEUHKOLOT
+            </div>
+
+        </div>
+
+        <div class="content">
+
+<p>
+    Pada hari ini
+    <strong>
+        <%= new Date(laporan.tanggal_penyerahan).toLocaleDateString('id-ID',{
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+        }) %>
+    </strong>
+
+    telah dilakukan serah terima barang bukti berupa kendaraan bermotor yang
+    sebelumnya dilaporkan hilang dan telah ditemukan oleh pihak Kepolisian.
+</p>
+
+<p>
+    Kendaraan tersebut diserahkan kepada:
+</p>
+
+<table>
+
+    <tr>
+        <td class="label">Nama</td>
+        <td>: <%= laporan.nama_penerima %></td>
+    </tr>
+
+    <tr>
+        <td class="label">NIK</td>
+        <td>: <%= laporan.nik_penerima %></td>
+    </tr>
+
+    <tr>
+        <td class="label">Alamat</td>
+        <td>: <%= laporan.alamat_penerima %></td>
+    </tr>
+
+</table>
+
+            <p>
+                Adapun kendaraan yang diserahkan adalah sebagai berikut:
+            </p>
+
+            <table>
+
+                <tr>
+                    <td class="label">Merk Kendaraan</td>
+                    <td>: <%= laporan.merk_motor %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">Tipe Kendaraan</td>
+                    <td>: <%= laporan.tipe_motor %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">Tahun Pembuatan</td>
+                    <td>: <%= laporan.tahun_pembuatan %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">Warna Kendaraan</td>
+                    <td>: <%= laporan.warna_motor %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">Nomor Polisi</td>
+                    <td>: <%= laporan.plat_nomor %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">Nomor Rangka</td>
+                    <td>: <%= laporan.nomor_rangka %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">Nomor Mesin</td>
+                    <td>: <%= laporan.nomor_mesin %></td>
+                </tr>
+
+                <tr>
+                    <td class="label">STNK Atas Nama</td>
+                    <td>: <%= laporan.stnk_atas_nama %></td>
+                </tr>
+
+            </table>
+
+            <table>
+
+                <tr>
+                    <td class="label">Tanggal Ditemukan</td>
+                    <td>
+                        :
+                        <%= new Date(laporan.tanggal_ditemukan).toLocaleDateString('id-ID',{
+                            day:'numeric',
+                            month:'long',
+                            year:'numeric'
+                        }) %>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">Tanggal Diserahkan</td>
+                    <td>
+                        :
+                        <%= new Date(laporan.tanggal_pengambilan).toLocaleDateString('id-ID',{
+                            day:'numeric',
+                            month:'long',
+                            year:'numeric'
+                        }) %>
+                    </td>
+                </tr>
+
+            </table>
+
+<p>
+    Penerima menyatakan bahwa kendaraan tersebut telah diterima dalam keadaan
+    baik dan sesuai dengan identitas kendaraan yang tercantum dalam dokumen
+    kepemilikan yang sah.
+</p>
+
+<p>
+    Dengan ditandatanganinya berita acara ini, maka proses penyerahan barang
+    bukti kendaraan dinyatakan telah selesai dan diterima oleh pihak penerima.
+</p>
+
+            <!-- TTD -->
+      <table class="ttd">
+
+        <tr>
+          <td>
+            <br> <br>
+            Pelapor
+            <br><br><br><br><br>
+
+            <%= laporan.nama_pelapor %>
+          </td>
+
+          <td>
+            Dayeuhkolot,
+            <%= new Date().toLocaleDateString('id-ID',{ day:'numeric', month:'long', year:'numeric' }) %>
+            <br> <br>
+            Petugas Penerima Laporan
+            <br><br><br><br><br>
+
+            Petugas
+            <br>
+          </td>
+
+        </tr>
+
+      </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

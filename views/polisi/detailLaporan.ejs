@@ -137,38 +137,21 @@
                         </div>
                     <% } %>
 
-                    <% if(laporan.foto_stnk) { %>
+                    <% if(laporan.foto_tkp) { %>
                         <div class="col-md-4">
                             <div class="card border-0 shadow-sm">
                                 <img 
-                                    src="/uploads/<%= laporan.foto_stnk %>"
+                                    src="/uploads/<%= laporan.foto_tkp %>"
                                     class="card-img-top"
                                     style="height: 250px; object-fit: cover;"
                                 >
                                 <div class="card-body">
                                     <h6 class="fw-bold">
-                                        Foto STNK
+                                        Foto TKP
                                     </h6>
                                 </div>
                             </div>
-                        </div>
-                    <% } %>
-
-                    <% if(laporan.foto_ktp) { %>
-                        <div class="col-md-4">
-                            <div class="card border-0 shadow-sm">
-                                <img 
-                                    src="/uploads/<%= laporan.foto_ktp %>"
-                                    class="card-img-top"
-                                    style="height: 250px; object-fit: cover;"
-                                >
-                                <div class="card-body">
-                                    <h6 class="fw-bold">
-                                        Foto KTP
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
+                        </div>               
                     <% } %>
                 </div>
             </div>
