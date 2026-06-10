@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
             status: {
                 $in: ["diproses", "ditemukan", "selesai"]
             } 
-        });
+        }).sort({ createdAt: -1 });
         
         const totalDiproses = laporan.filter(
             item => item.status === "diproses"
