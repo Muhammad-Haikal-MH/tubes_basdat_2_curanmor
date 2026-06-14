@@ -20,7 +20,6 @@ const laporanSchema = new mongoose.Schema(
     alamat_pelapor: String,
 
     plat_nomor: String,
-
     merk_motor: String,
     tipe_motor: String,
     warna_motor: String,
