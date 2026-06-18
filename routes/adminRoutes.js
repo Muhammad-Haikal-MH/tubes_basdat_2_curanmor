@@ -11,25 +11,43 @@ const router = express.Router();
 router.get("/", isLoggedIn, isAdmin, async (req, res) => {
 
     try {
-        // ambil semua laporan
-        const laporan = await Laporan.find().sort({
-            createdAt: -1
-        });
+        const filter = {};
 
-        // statistik
+        if (req.query.status) {
+          filter.status = req.query.status;
+        } else {
+          filter.status = {
+            $in: ["diproses", "ditemukan", "selesai"]
+          };
+        }
+        
+        const laporan = await Laporan.find(filter)
+        .sort({ createdAt: -1 });
+
+
         const totalLaporan = await Laporan.countDocuments();
         const diproses = await Laporan.countDocuments({
             status: "Diproses"
         });
-        const selesai = await Laporan.countDocuments({
-            status: "Selesai"
-        });
+        
+        const totalDiproses = laporan.filter(
+            item => item.status === "diproses"
+        ).length;
+
+        const totalSelesai = laporan.filter(
+            item => item.status === "selesai"
+        ).length;
+
+        const totalDitemukan = laporan.filter(
+            item => item.status === "ditemukan"
+        ).length;
 
         res.render("admin/dashboard", {
             laporan,
             totalLaporan,
-            diproses,
-            selesai
+            totalDiproses,
+            totalSelesai,
+            totalDitemukan
         });
 
     } catch(error) {

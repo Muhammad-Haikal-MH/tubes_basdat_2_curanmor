@@ -170,13 +170,13 @@
 
 <p>
     Pada hari ini
-    <strong>
+ 
         <%= new Date(laporan.tanggal_penyerahan).toLocaleDateString('id-ID',{
         day:'numeric',
         month:'long',
         year:'numeric'
         }) %>
-    </strong>
+    
 
     telah dilakukan serah terima barang bukti berupa kendaraan bermotor yang
     sebelumnya dilaporkan hilang dan telah ditemukan oleh pihak Kepolisian.
@@ -211,6 +211,10 @@
 
             <table>
 
+                <tr>
+                    <td class="label">Nama Pemilik</td>
+                    <td>: <%= laporan.nama_pelapor %></td>
+                </tr>
                 <tr>
                     <td class="label">Merk Kendaraan</td>
                     <td>: <%= laporan.merk_motor %></td>
@@ -298,10 +302,10 @@
         <tr>
           <td>
             <br>
-            Pelapor
+            Penerima Barang Bukti
             <br><br><br><br><br>
 
-            <%= laporan.nama_pelapor %>
+            <%= laporan.nama_penerima %>
           </td>
 
           <td>

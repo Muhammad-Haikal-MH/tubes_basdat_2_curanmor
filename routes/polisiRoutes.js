@@ -6,11 +6,23 @@ const router = express.Router();
 router.get("/", async (req, res) => {
 
     try {
-        const laporan = await Laporan.find({
-            status: {
-                $in: ["diproses", "ditemukan", "selesai"]
-            } 
-        }).sort({ createdAt: -1 });
+        const filter = {};
+
+        if (req.query.status) {
+          filter.status = req.query.status;
+        } else {
+          filter.status = {
+            $in: ["diproses", "ditemukan", "selesai"]
+          };
+        }
+        
+        const laporan = await Laporan.find(filter)
+        .sort({ createdAt: -1 });
+
+        const totalLaporan = await Laporan.countDocuments();
+        const diproses = await Laporan.countDocuments({
+            status: "Diproses"
+        });
         
         const totalDiproses = laporan.filter(
             item => item.status === "diproses"
@@ -26,6 +38,7 @@ router.get("/", async (req, res) => {
 
         res.render("polisi/dashboard", {
             laporan,
+            totalLaporan,
             totalDiproses,
             totalSelesai,
             totalDitemukan

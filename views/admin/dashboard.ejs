@@ -4,166 +4,176 @@
 
 <div class="main-content">
 
-    <!-- TOPBAR -->
+  <!-- TOPBAR -->
 
-    <div class="topbar p-3 d-flex justify-content-between align-items-center">
+  <div class="topbar p-3 d-flex justify-content-between align-items-center">
 
-        <h4 class="mb-0 fw-bold">
-            Dashboard Admin
-        </h4>
+    <h4 class="mb-0 fw-bold">
+      Dashboard Admin
+    </h4>
 
-        <div class="d-flex align-items-center gap-3">
+    <div class="d-flex align-items-center gap-3">
 
-            <i class="bi bi-bell fs-5"></i>
+      <i class="bi bi-bell fs-5"></i>
 
-            <div class="fw-semibold">
-                Admin
-            </div>
-
-        </div>
+      <div class="fw-semibold">
+        Admin
+      </div>
 
     </div>
 
+  </div>
 
 
-    <!-- CONTENT -->
 
-    <div class="container-fluid p-4">
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="card stat-card shadow-sm">
-                    <div class="card-body">
-                        <h6 class="text-muted">
-                            Total Laporan
-                        </h6>
-                        <h2 class="fw-bold">
-                            <%= totalLaporan %>
-                        </h2>
-                    </div>
-                </div>
-            </div>
+  <!-- CONTENT -->
 
-            <div class="col-md-4">
-                <div class="card stat-card shadow-sm">
-                    <div class="card-body">
-                        <h6 class="text-muted">
-                            Diproses
-                        </h6>
+  <div class="row mb-4 p-4">
 
-                        <h2 class="fw-bold text-warning">
-                            <%= diproses %>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card stat-card shadow-sm">
-                    <div class="card-body">
-                        <h6 class="text-muted">
-                            Selesai
-                        </h6>
-
-                        <h2 class="fw-bold text-success">
-                            <%= selesai %>
-                        </h2>
-                    </div>
-                </div>
-            </div>
+    <!-- Total -->
+    <div class="col-md-3">
+      <a href="/admin" class="text-decoration-none">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h6 class="text-muted">Total Laporan</h6>
+            <h2 class="fw-bold text-dark">
+              <%= totalLaporan %>
+            </h2>
+          </div>
         </div>
+      </a>
+    </div>
 
-        <!-- TABLE -->
+    <!-- Diproses -->
+    <div class="col-md-3">
+      <a href="/admin?status=diproses" class="text-decoration-none">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h6 class="text-muted">Laporan Diproses</h6>
+            <h2 class="fw-bold text-warning">
+              <%= totalDiproses %>
+            </h2>
+          </div>
+        </div>
+      </a>
+    </div>
 
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body">
-                <h5 class="fw-bold mb-4">
-                    Data Laporan
-                </h5>
+    <!-- Ditemukan -->
+    <div class="col-md-3">
+      <a href="/admin?status=ditemukan" class="text-decoration-none">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h6 class="text-muted">Laporan Ditemukan</h6>
+            <h2 class="fw-bold text-primary">
+              <%= totalDitemukan %>
+            </h2>
+          </div>
+        </div>
+      </a>
+    </div>
 
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Pelapor</th>
-                                <th>Kendaraan</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% laporan.forEach((item) => { %>
-                                <tr>
-                                    <td>
-                                        <%= new Date(item.createdAt).toLocaleDateString('id-ID', {
+    <!-- Selesai -->
+    <div class="col-md-3">
+      <a href="/admin?status=selesai" class="text-decoration-none">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h6 class="text-muted">Laporan Selesai</h6>
+            <h2 class="fw-bold text-success">
+              <%= totalSelesai %>
+            </h2>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-4">
+        Data Laporan
+      </h5>
+
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Pelapor</th>
+              <th>Kendaraan</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% laporan.forEach((item) => { %>
+            <tr>
+              <td>
+                <%= new Date(item.createdAt).toLocaleDateString('id-ID', {
                                             day: 'numeric',
                                             month: 'long',
                                             year: 'numeric'
                                         }) %>
-                                    <td><%= item.nama_pelapor %></td>
-                                    <td>
-                                        <%= item.merk_motor %>
-                                        <%= item.tipe_motor %>
-                                    </td>
-                                    
-                                    <td>
-                                        <% if(item.status === "menunggu") { %>
-                                            <span class="badge bg-secondary">
-                                                Menunggu
-                                            </span>
-                                        <% } %>
-                                        <% if(item.status === "diproses") { %>
-                                            <span class="badge bg-warning text-dark">
-                                                Diproses
-                                            </span>
-                                        <% } %>
-                                        <% if(item.status === "ditemukan") { %>
-                                            <span class="badge bg-primary">
-                                                Ditemukan
-                                            </span>
-                                        <% } %>
-                                        <% if(item.status === "selesai") { %>
-                                            <span class="badge bg-success">
-                                                Selesai
-                                            </span>
-                                        <% } %>
-                                    </td>
-                                            
-                                    <td class="d-flex gap-2 flex-wrap">
-                                        <a href="/admin/laporan/<%= item._id %>" class="btn btn-sm btn-info text-white">
-                                            Detail
-                                        </a>
+              <td><%= item.nama_pelapor %></td>
+              <td>
+                <%= item.merk_motor %>
+                <%= item.tipe_motor %>
+              </td>
 
-                                        <!-- PROSES -->
-                                        <% if(item.status === "menunggu") { %>
-                                            <form action="/admin/laporan/<%= item._id %>/status" method="POST">
-                                                <input 
-                                                    type="hidden"
-                                                    name="status"
-                                                    value="diproses"
-                                                >
-                                                <button class="btn btn-sm btn-warning">
-                                                    Proses
-                                                </button>
-                                            </form>
-                                        <% } %>
+              <td>
+                <% if(item.status === "menunggu") { %>
+                <span class="badge bg-secondary">
+                  Menunggu
+                </span>
+                <% } %>
+                <% if(item.status === "diproses") { %>
+                <span class="badge bg-warning text-dark">
+                  Diproses
+                </span>
+                <% } %>
+                <% if(item.status === "ditemukan") { %>
+                <span class="badge bg-primary">
+                  Ditemukan
+                </span>
+                <% } %>
+                <% if(item.status === "selesai") { %>
+                <span class="badge bg-success">
+                  Selesai
+                </span>
+                <% } %>
+              </td>
 
-                                        <form action="/admin/laporan/<%= item._id %>/delete" method="POST">
-                                            <button class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Yakin hapus laporan ini?')"
-                                            >
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+              <td class="d-flex gap-2 flex-wrap">
+                <a href="/admin/laporan/<%= item._id %>" class="btn btn-sm btn-info text-white">
+                  Detail
+                </a>
+
+                <!-- PROSES -->
+                <% if(item.status === "menunggu") { %>
+                <form action="/admin/laporan/<%= item._id %>/status" method="POST">
+                  <input type="hidden" name="status" value="diproses">
+                  <button class="btn btn-sm btn-warning">
+                    Proses
+                  </button>
+                </form>
+                <% } %>
+
+                <form action="/admin/laporan/<%= item._id %>/delete" method="POST">
+                  <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus laporan ini?')">
+                    Hapus
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+</div>
 </div>
 
 <%- include('../partials/dashboardFooter') %>
