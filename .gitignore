@@ -1,0 +1,5 @@
+tubes_basdat_2_curanmor/
+.env
+public/uploads/
+.vscode/
+*.log
